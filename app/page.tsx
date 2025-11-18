@@ -5,16 +5,16 @@ import { Button } from "@/components/ui/button"
 import { database, ref, set, push } from "@/lib/firebase"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  FaCheckCircle,
-  FaMobileAlt,
-  FaUnlock,
-  FaBolt,
-  FaDollarSign,
-  FaSyncAlt,
-  FaSmile,
-  FaBullseye,
-  FaShieldAlt,
+import { 
+  FaCheckCircle, 
+  FaMobileAlt, 
+  FaUnlock, 
+  FaBolt, 
+  FaDollarSign, 
+  FaSyncAlt, 
+  FaSmile, 
+  FaBullseye, 
+  FaShieldAlt, 
   FaRocket,
   FaMapMarkerAlt,
   FaBell,
@@ -201,6 +201,14 @@ const productSubTabs = [
   },
 ]
 
+const heroHeading =
+  "text-3xl sm:text-4xl md:text-5xl font-bold text-primary text-balance leading-tight tracking-tight"
+const sectionHeading =
+  "text-2xl sm:text-3xl font-semibold text-primary text-balance leading-tight tracking-tight"
+const sectionSubtitle =
+  "text-base sm:text-lg text-muted-foreground leading-relaxed"
+const bodyText = "text-base sm:text-lg text-muted-foreground leading-relaxed"
+
 // Placeholder for WorkshopChecklist component
 const WorkshopChecklist = () => {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -252,7 +260,7 @@ export default function Page() {
   const [pickupCarouselIndex, setPickupCarouselIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxSource, setLightboxSource] = useState<'spatial' | 'technical' | 'pickup' | 'pickupJourney' | 'seeItInAction'>('spatial')
-
+  
   // Auto-play carousel every 4 seconds
   useEffect(() => {
     const autoPlayInterval = setInterval(() => {
@@ -269,7 +277,7 @@ export default function Page() {
 
     return () => clearInterval(autoPlayInterval)
   }, [])
-
+  
   const [trackingOptionsOpen, setTrackingOptionsOpen] = useState(false)
   const [pickupDropoffOpen, setPickupDropoffOpen] = useState(false)
   const [pricingOpen, setPricingOpen] = useState(false)
@@ -370,7 +378,7 @@ export default function Page() {
         setLightboxOpen(false)
       } else if (e.key === 'ArrowRight') {
         if (lightboxSource === 'spatial') {
-          nextCarouselImage()
+        nextCarouselImage()
         } else if (lightboxSource === 'technical') {
           nextTechFoundationImage()
         } else if (lightboxSource === 'pickup') {
@@ -382,7 +390,7 @@ export default function Page() {
         }
       } else if (e.key === 'ArrowLeft') {
         if (lightboxSource === 'spatial') {
-          prevCarouselImage()
+        prevCarouselImage()
         } else if (lightboxSource === 'technical') {
           prevTechFoundationImage()
         } else if (lightboxSource === 'pickup') {
@@ -552,62 +560,74 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <header className="border-b border-gray-200 bg-white sticky top-0 z-10 shadow-sm">
-        <div className="container mx-auto px-4 sm:px-6">
-          <nav className="flex gap-4 md:gap-8 overflow-x-auto py-4 scrollbar-hide">
-            {slides.map((slide, index) => {
-              return (
-                <button
-                  key={slide.id}
-                  onClick={() => goToSlide(index)}
-                  className={`
-                    relative text-sm md:text-base font-medium transition-all duration-200 flex-shrink-0 whitespace-nowrap
-                    px-2 py-1 rounded-md
-                    ${
-                      currentSlide === index
-                        ? "text-primary font-semibold"
-                        : "text-gray-600 hover:text-primary hover:bg-gray-50"
-                    }
-                  `}
-                >
-                  {slide.tabLine1}
-                  {currentSlide === index && (
-                    <span className="absolute bottom-[-17px] left-0 right-0 h-1 bg-primary rounded-full"></span>
-                  )}
-                </button>
-              )
-            })}
-          </nav>
+    <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
+      <header className="border-b border-gray-200 bg-white sticky top-0 z-20 shadow-sm">
+        <div className="w-full">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 gap-3 bg-white/80 backdrop-blur supports-[backdrop-filter]:backdrop-blur-md">
+            <div className="flex items-center gap-2">
+              <img src="/icon-light-32x32.png" alt="Rental Buddy" className="h-8 w-8 rounded-full object-cover hidden sm:block" />
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Rental Buddy</p>
+                <p className="text-sm font-semibold text-foreground">Operator Workspace</p>
+              </div>
+            </div>
+            <button
+              className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+              onClick={() => setShowWelcome(true)}
+            >
+              Restart
+            </button>
+          </div>
+          <div className="w-full overflow-hidden">
+            <nav className="flex gap-2 sm:gap-4 md:gap-6 overflow-x-auto px-4 sm:px-6 py-3 scrollbar-hide min-h-[54px]">
+              {slides.map((slide, index) => {
+                return (
+                  <button
+                    key={slide.id}
+                    onClick={() => goToSlide(index)}
+                    className={`
+                      relative text-xs sm:text-sm md:text-base font-medium transition-all duration-200 flex-shrink-0 whitespace-nowrap
+                      px-3 py-1.5 rounded-full border
+                      ${
+                        currentSlide === index
+                          ? "text-primary border-primary bg-primary/10"
+                          : "text-muted-foreground border-transparent hover:text-primary hover:bg-primary/5"
+                      }
+                    `}
+                  >
+                    {slide.tabLine1}
+                  </button>
+                )
+              })}
+            </nav>
+          </div>
         </div>
       </header>
 
-      <main className="flex-1 container mx-auto px-4 sm:px-6 py-6 md:py-8">
+      <main className="flex-1 w-full px-4 sm:px-6 py-6 md:py-8">
         <div className="max-w-6xl mx-auto h-full">
           
           {currentSlide === 2 && (
-            <div className="mb-6 md:mb-8 -mx-4 sm:mx-0">
-              <div className="overflow-x-auto px-4 sm:px-2">
-                <div className="flex gap-3 md:gap-4 justify-start md:justify-center pb-3 min-w-max md:min-w-0">
-                  {productSubTabs.map((subTab, index) => {
-                    return (
-                      <button
-                        key={subTab.id}
-                        onClick={() => setCurrentSubTab(index)}
-                        className={`
-                          relative px-5 md:px-6 py-2 md:py-2.5 text-sm md:text-base font-medium transition-all duration-200 flex-shrink-0 rounded-lg whitespace-nowrap
-                          ${
-                            currentSubTab === index
-                              ? "text-white bg-primary font-semibold shadow-md"
-                              : "text-gray-700 hover:text-white hover:bg-primary/80 bg-gray-100 border border-gray-200"
-                          }
-                        `}
-                      >
-                        {subTab.tabLine1}
-                      </button>
-                    )
-                  })}
-                </div>
+            <div className="mb-6 md:mb-8">
+              <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center">
+                {productSubTabs.map((subTab, index) => {
+                  return (
+                    <button
+                      key={subTab.id}
+                      onClick={() => setCurrentSubTab(index)}
+                      className={`
+                        relative px-4 md:px-6 py-2 text-sm md:text-base font-medium transition-all duration-200 rounded-full
+                        ${
+                          currentSubTab === index
+                            ? "text-white bg-primary font-semibold shadow-md"
+                            : "text-muted-foreground hover:text-primary hover:bg-primary/10 bg-card border border-border"
+                        }
+                      `}
+                    >
+                      {subTab.tabLine1}
+                    </button>
+                  )
+                })}
               </div>
             </div>
           )}
@@ -616,7 +636,7 @@ export default function Page() {
             <div className="bg-card rounded-xl md:rounded-2xl border border-gray-200 p-6 sm:p-10 md:p-16 min-h-[400px] md:min-h-[550px] flex flex-col justify-center shadow-lg animate-in fade-in duration-500">
               {currentSlide === 0 && (
                 <div className="animate-in fade-in slide-in-from-right duration-500">
-                  <h2 className="text-2xl sm:text-3xl font-semibold mb-6 md:mb-10 text-primary text-balance">
+                  <h2 className={`${sectionHeading} mb-6 md:mb-10 text-left`}>
                     Agenda
                   </h2>
                   <div className="space-y-4 md:space-y-5 text-foreground leading-relaxed">
@@ -641,17 +661,17 @@ export default function Page() {
 
               {currentSlide === 1 && (
                 <div className="animate-in fade-in slide-in-from-right duration-500">
-                  <h2 className="text-3xl sm:text-4xl font-semibold mb-8 md:mb-12 text-primary text-balance leading-tight">
+                  <h2 className={`${heroHeading} mb-6 md:mb-10`}>
                     360 Sierra — Our Vision
                   </h2>
-                  <div className="space-y-6 md:space-8 text-foreground leading-relaxed max-w-5xl mx-auto">
-                    <p className="text-xl sm:text-2xl font-bold text-primary border-l-4 border-primary pl-3 md:pl-4 py-2">
+                  <div className="space-y-5 sm:space-y-8 text-foreground leading-relaxed max-w-5xl mx-auto">
+                    <p className="text-base sm:text-xl font-bold text-primary border-l-4 border-primary pl-3 md:pl-4 py-2">
                       Built by operators, for operators.
                     </p>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 text-base md:text-lg">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 text-sm sm:text-base md:text-lg">
                       <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Who We Are</h3>
+                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Who We Are</h3>
                         <p className="text-foreground leading-relaxed">
                           <span className="font-semibold">360 Sierra</span> is a{" "}
                           <span className="font-bold text-primary">U.S.-based startup</span> created by a team with{" "}
@@ -660,7 +680,7 @@ export default function Page() {
                       </div>
 
                       <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 md:mb-3">The Problem We Saw</h3>
+                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">The Problem We Saw</h3>
                         <p className="text-foreground leading-relaxed">
                           After running our own <span className="font-bold text-primary">RV rental business</span>, we saw how hard it is to manage operations across{" "}
                           <span className="font-bold">fragmented tools and disconnected systems</span>.
@@ -668,7 +688,7 @@ export default function Page() {
                       </div>
 
                       <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Our Solution</h3>
+                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Our Solution</h3>
                         <p className="text-foreground leading-relaxed">
                           That experience led us to build <span className="font-bold text-primary">Rental Buddy</span>, a platform that combines{" "}
                           <span className="font-bold">AI</span> and{" "}
@@ -678,13 +698,13 @@ export default function Page() {
                     </div>
                     
                     <div className="bg-secondary border-l-4 border-primary p-4 sm:p-6 rounded-lg shadow-sm">
-                      <p className="text-lg sm:text-xl font-semibold text-foreground italic">
-                        {"Our goal is to help rental companies use their data with AI to make faster decisions and run operations with more clarity and control."}
+                      <p className="text-base sm:text-xl font-semibold text-foreground italic">
+                        {"Your company will benefit from using its data with AI to make faster decisions and manage operations with greater clarity and control."}
                       </p>
                     </div>
 
                     <div className="bg-secondary p-6 sm:p-8 rounded-xl md:rounded-2xl border border-border shadow-md mt-6 md:mt-8">
-                      <p className="font-bold text-foreground mb-4 md:mb-6 text-xl sm:text-2xl text-center">Our AI-Ready Platform | Beyond SaaS</p>
+                      <p className="font-bold text-foreground mb-4 md:mb-6 text-lg sm:text-2xl text-center">Our AI-Ready Platform | Beyond SaaS</p>
                       
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                         <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col">
@@ -696,7 +716,7 @@ export default function Page() {
                           </p>
                           <div className="mt-3 pt-3 border-t border-border flex items-center justify-center">
                             <img 
-                              src="/images/design-mode/uber%20logo.png" 
+                              src="/images/design-mode/uber-logo.png" 
                               alt="Uber" 
                               className="h-6 sm:h-8 object-contain opacity-80"
                             />
@@ -712,7 +732,7 @@ export default function Page() {
                           </p>
                           <div className="mt-3 pt-3 border-t border-border flex items-center justify-center">
                             <img 
-                              src="/images/design-mode/zip%20cardownload.jpeg" 
+                              src="/images/design-mode/zip-cardownload.jpeg" 
                               alt="Lime" 
                               className="h-8 sm:h-10 object-contain"
                             />
@@ -728,7 +748,7 @@ export default function Page() {
                           </p>
                           <div className="mt-3 pt-3 border-t border-border flex items-center justify-center">
                             <img 
-                              src="/images/design-mode/toyota%202%20logo.png" 
+                              src="/images/design-mode/toyota-2-logo.png" 
                               alt="Toyota" 
                               className="h-7 sm:h-9 object-contain"
                             />
@@ -739,90 +759,84 @@ export default function Page() {
 
                     {/* CHANGE: Added What You Unlock section to 360 Sierra page */}
                     <div className="mt-10 md:mt-16">
-                      <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 md:mb-10 text-primary">
+                      <h3 className={`${sectionHeading} text-center mb-5 md:mb-8`}>
                         What You Unlock
                       </h3>
                       
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
-                        <div className="flex items-center gap-3 md:gap-4 justify-center">
-                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                            <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">+40% Efficiency</p>
-                        </div>
-                        
-                        <div className="flex items-center gap-3 md:gap-4 justify-center">
-                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                            <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">+60% Consistency</p>
-                        </div>
-                        
-                        <div className="flex items-center gap-3 md:gap-4 justify-center">
-                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                            <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">2x Scalability</p>
-                        </div>
+                      <div className="space-y-3 sm:space-y-4 mb-8 md:mb-12">
+                        {[
+                          { value: '+40%', label: 'Efficiency' },
+                          { value: '+60%', label: 'Consistency' },
+                          { value: '2x', label: 'Scalability' },
+                        ].map((item) => (
+                          <div
+                            key={item.label}
+                            className="flex items-center justify-between gap-4 bg-card rounded-full px-4 py-3 border border-border shadow-sm"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary flex items-center justify-center">
+                                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
                       </div>
-
+                              <span className="text-xl sm:text-3xl font-bold text-foreground">{item.value}</span>
+                      </div>
+                            <span className="text-base sm:text-2xl font-semibold text-foreground">{item.label}</span>
+                      </div>
+                        ))}
+                    </div>
+                    
                       <div className="bg-secondary p-6 sm:p-8 md:p-10 rounded-xl md:rounded-2xl border border-border shadow-lg">
-                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 md:mb-6 text-primary">
+                        <h3 className={`${sectionHeading} text-center mb-4 md:mb-6`}>
                           A Single Source of Truth
                         </h3>
-                        <p className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-foreground">
+                        <p className="text-base sm:text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-foreground">
                           for Your Vehicle Rental Operations
                         </p>
-                        <p className="text-lg sm:text-xl md:text-2xl font-semibold text-center mb-6 md:mb-8 text-foreground">
+                        <p className="text-base sm:text-xl md:text-2xl font-semibold text-center mb-6 md:mb-8 text-muted-foreground">
                           Our AI-Ready Platform | Beyond SaaS
                         </p>
                         
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 items-center justify-items-center">
-                          <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-20 md:h-24">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 items-center justify-items-center">
+                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
                             <img 
-                              src="/images/design-mode/rental-car-manager-logo.jpg" 
-                              alt="Rental Car Manager" 
+                              src="/images/design-mode/rcm-logo.png" 
+                              alt="RCM" 
                               className="max-w-full max-h-full object-contain"
                             />
                           </div>
-                          <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-20 md:h-24">
+                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
                             <img 
-                              src="/images/design-mode/wheelbase-logo.jpg" 
-                              alt="Wheelbase" 
+                              src="/images/design-mode/wheelbase-logo.webp" 
+                            alt="Wheelbase" 
+                              className="max-w-full max-h-full object-contain"
+                          />
+                          </div>
+                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
+                          <img 
+                              src="/images/design-mode/slack-logo.png" 
+                            alt="Slack" 
+                              className="max-w-full max-h-full object-contain"
+                          />
+                          </div>
+                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
+                          <img 
+                              src="/images/design-mode/whatsapp-logo.jpeg" 
+                            alt="WhatsApp" 
                               className="max-w-full max-h-full object-contain"
                             />
                           </div>
-                          <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-20 md:h-24">
+                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
                             <img 
-                              src="/images/design-mode/slack-logo.jpg" 
-                              alt="Slack" 
+                              src="/images/design-mode/google-drive-logo.png" 
+                              alt="Google Drive" 
                               className="max-w-full max-h-full object-contain"
                             />
                           </div>
-                          <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-20 md:h-24">
+                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
                             <img 
-                              src="/images/design-mode/whatsapp-logo.jpg" 
-                              alt="WhatsApp" 
-                              className="max-w-full max-h-full object-contain"
-                            />
-                          </div>
-                          <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-20 md:h-24">
-                            <img 
-                              src="/images/design-mode/google-logo.jpg" 
-                              alt="Google" 
-                              className="max-w-full max-h-full object-contain"
-                            />
-                          </div>
-                          <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-20 md:h-24">
-                            <img 
-                              src="/images/design-mode/openai-logo.jpg" 
-                              alt="OpenAI" 
+                              src="/images/design-mode/n8n-badge.png" 
+                              alt="N8n" 
                               className="max-w-full max-h-full object-contain"
                             />
                           </div>
@@ -837,27 +851,27 @@ export default function Page() {
                 <>
                   {currentSubTab === 0 && (
                     <div className="animate-in fade-in slide-in-from-right duration-500">
-                      <div className="text-center mb-10 md:mb-16">
+                      <div className="text-center mb-8 md:mb-14">
                         <img 
-                          src="/images/design-mode/rentalBuddy%20transparent.png" 
+                          src="/images/design-mode/rentalbuddy-transparent.png" 
                           alt="Rental Buddy" 
-                          className="h-16 sm:h-24 md:h-28 mx-auto object-contain mb-6 md:mb-10 drop-shadow-2xl"
+                          className="h-14 sm:h-24 md:h-28 mx-auto object-contain mb-4 md:mb-8 drop-shadow-2xl"
                         />
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-10 text-primary text-balance leading-tight">
+                        <h2 className={`${heroHeading} mb-5 md:mb-10`}>
                           How Rental Buddy Fits into Your Workflow
                         </h2>
                       </div>
                       
-                      <div className="space-y-6 md:space-y-8 max-w-5xl mx-auto">
-                        <div className="bg-secondary p-8 sm:p-10 rounded-xl md:rounded-2xl border border-border shadow-md">
-                          <h3 className="text-2xl sm:text-3xl font-bold mb-4 md:mb-6 text-center text-primary leading-tight">
+                      <div className="space-y-5 sm:space-y-8 max-w-5xl mx-auto">
+                        <div className="bg-secondary p-6 sm:p-8 md:p-10 rounded-xl md:rounded-2xl border border-border shadow-md">
+                          <h3 className="text-xl sm:text-3xl font-bold mb-4 md:mb-6 text-center text-primary leading-tight">
                             The Complete Rental Journey
                           </h3>
                           <div className="relative">
                             <div className="absolute top-4 sm:top-8 left-0 right-0 h-1 bg-gradient-to-r from-gray-300 via-teal-300 via-green-300 to-green-400"></div>
                             
-                            <div className="relative flex items-start justify-between gap-1 sm:gap-2">
-                              <div className="flex-1 text-center px-1">
+                            <div className="relative flex items-start justify-between gap-3 sm:gap-2 overflow-x-auto pb-4">
+                              <div className="flex-1 min-w-[80px] text-center px-1">
                                 <div className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-card border-2 sm:border-4 border-border flex items-center justify-center text-muted-foreground text-lg sm:text-2xl font-bold shadow-lg">
                                   1
                                 </div>
@@ -865,7 +879,7 @@ export default function Page() {
                                 <div className="text-xs sm:text-sm text-muted-foreground bg-secondary px-2 py-1 rounded-lg border border-border inline-block">RCM</div>
                               </div>
                               
-                              <div className="flex-1 text-center px-1">
+                              <div className="flex-1 min-w-[80px] text-center px-1">
                                 <div className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-lg sm:text-2xl font-bold shadow-lg shadow-primary">
                                   2
                                 </div>
@@ -873,7 +887,7 @@ export default function Page() {
                                 <div className="text-xs sm:text-sm text-primary-foreground bg-primary px-2 py-1 rounded-lg border border-primary inline-block font-semibold">Rental Buddy</div>
                               </div>
                               
-                              <div className="flex-1 text-center px-1">
+                              <div className="flex-1 min-w-[80px] text-center px-1">
                                 <div className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-lg sm:text-2xl font-bold shadow-lg shadow-primary">
                                   3
                                 </div>
@@ -881,7 +895,7 @@ export default function Page() {
                                 <div className="text-xs sm:text-sm text-primary-foreground bg-primary px-2 py-1 rounded-lg border border-primary inline-block font-semibold">Rental Buddy</div>
                               </div>
                               
-                              <div className="flex-1 text-center px-1">
+                              <div className="flex-1 min-w-[80px] text-center px-1">
                                 <div className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-lg sm:text-2xl font-bold shadow-lg shadow-primary">
                                   4
                                 </div>
@@ -889,7 +903,7 @@ export default function Page() {
                                 <div className="text-xs sm:text-sm text-primary-foreground bg-primary px-2 py-1 rounded-lg border border-primary inline-block font-semibold">Trackit</div>
                               </div>
                               
-                              <div className="flex-1 text-center px-1">
+                              <div className="flex-1 min-w-[80px] text-center px-1">
                                 <div className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-lg sm:text-2xl font-bold shadow-lg shadow-primary">
                                   5
                                 </div>
@@ -897,7 +911,7 @@ export default function Page() {
                                 <div className="text-xs sm:text-sm text-primary-foreground bg-primary px-2 py-1 rounded-lg border border-primary inline-block font-semibold">Rental Buddy</div>
                               </div>
                               
-                              <div className="flex-1 text-center px-1">
+                              <div className="flex-1 min-w-[80px] text-center px-1">
                                 <div className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-lg sm:text-2xl font-bold shadow-lg shadow-primary">
                                   6
                                 </div>
@@ -968,15 +982,15 @@ export default function Page() {
                     <div className="animate-in fade-in slide-in-from-right duration-500">
                       <div className="space-y-6 md:space-y-10">
                         <div className="text-center">
-                          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 text-primary text-balance leading-tight">
+                          <h2 className={`${heroHeading} mb-4 md:mb-6`}>
                             Rental Buddy Trackit
                           </h2>
-                          <p className="text-xl sm:text-2xl text-muted-foreground italic">Beyond Location Tracking</p>
+                          <p className={`${sectionSubtitle} italic text-center`}>Beyond Location Tracking</p>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                           <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-lg">
-                            <h3 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4 text-foreground">The Problem</h3>
+                            <h3 className="text-lg sm:text-2xl font-bold mb-3 md:mb-4 text-foreground">The Problem</h3>
                             <p className="text-base sm:text-lg leading-relaxed text-foreground">
                               Most tracking systems <span className="font-bold text-muted-foreground">stop at location</span>. 
                               They show <span className="font-bold">where vehicles are</span>, 
@@ -985,7 +999,7 @@ export default function Page() {
                           </div>
                           
                           <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-lg">
-                            <h3 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4 text-primary">The Trackit Solution</h3>
+                            <h3 className="text-lg sm:text-2xl font-bold mb-3 md:mb-4 text-primary">The Trackit Solution</h3>
                             <p className="text-base sm:text-lg leading-relaxed text-foreground">
                               We turn <span className="font-bold text-primary">every trip and signal</span> into 
                               <span className="font-bold"> insights</span> that reveal{" "}
@@ -1332,18 +1346,20 @@ export default function Page() {
 
                   {currentSubTab === 2 && (
                     <div className="animate-in fade-in slide-in-from-right duration-500">
-                      <div className="space-y-6 md:space-8">
+                      <div className="space-y-5 sm:space-y-8">
                         <div className="text-center">
-                          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 md:mb-3 text-primary text-balance leading-tight">
+                          <h2 className={`${heroHeading} mb-2 md:mb-3`}>
                             Rental Buddy Flexible Pick-Up & Drop-Off
                           </h2>
-                          <p className="text-base sm:text-xl text-muted-foreground">Built for how renters move — digital, flexible, and on their own time</p>
+                          <p className={`${sectionSubtitle} text-center`}>
+                            Built for how renters move — digital, flexible, and on their own time
+                          </p>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                         {/* Replaced static demo placeholder with carousel using the 7 new images */}
                           <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl shadow-md">
-                            <h3 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4 text-foreground">See It in Action</h3>
+                            <h3 className="text-lg sm:text-2xl font-bold mb-3 md:mb-4 text-foreground">See It in Action</h3>
                             {/* CHANGE: Reduced container size from aspect-[9/16] to max-w-xs and added centering */}
                             <div 
                               className="relative max-w-xs mx-auto bg-secondary rounded-lg md:rounded-xl overflow-hidden border border-border group cursor-pointer"
@@ -1417,7 +1433,7 @@ export default function Page() {
                           </div>
 
                           <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl shadow-xl border border-border flex flex-col">
-                            <h3 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4 text-center text-primary">
+                            <h3 className="text-lg sm:text-2xl font-bold mb-3 md:mb-4 text-center text-primary">
                               Proven Impact
                             </h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
@@ -1440,8 +1456,8 @@ export default function Page() {
 
                         {/* CHANGE: Replaced carousel with single mosaic image */}
                         <div className="bg-card p-3 sm:p-4 rounded-xl md:rounded-2xl border border-border shadow-lg">
-                          <h3 className="text-3xl sm:text-4xl font-bold mb-3 md:mb-4 text-primary text-center">Complete Digital Journey</h3>
-                          <p className="text-base sm:text-xl text-foreground leading-relaxed mb-4 md:mb-5 text-center max-w-4xl mx-auto font-medium">
+                          <h3 className="text-2xl sm:text-4xl font-bold mb-3 md:mb-4 text-primary text-center">Complete Digital Journey</h3>
+                          <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed mb-4 md:mb-5 text-center max-w-4xl mx-auto font-medium">
                             Transform every rental into a guided digital flow from verification to return. 
                             Renters move on their own time, not the branch's.
                           </p>
@@ -1458,7 +1474,7 @@ export default function Page() {
                         </div>
 
                         <div>
-                          <h3 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4 text-center text-primary">
+                          <h3 className="text-lg sm:text-2xl font-bold mb-3 md:mb-4 text-center text-primary">
                             Why It Matters
                           </h3>
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
@@ -1542,7 +1558,7 @@ export default function Page() {
                           onClick={() => setPickupDropoffOpen(!pickupDropoffOpen)}
                           className="w-full px-5 sm:px-8 py-4 sm:py-6 flex items-center justify-between bg-secondary hover:bg-secondary/80 transition-colors duration-200"
                         >
-                          <h3 className="text-xl sm:text-2xl font-bold text-foreground">Pick-Up & Drop-Off Options</h3>
+                          <h3 className="text-lg sm:text-2xl font-bold text-foreground">Pick-Up & Drop-Off Options</h3>
                           <svg
                             className={`w-5 h-5 sm:w-6 sm:h-6 text-primary transform transition-transform duration-300 ${
                               pickupDropoffOpen ? 'rotate-180' : ''
@@ -1607,7 +1623,7 @@ export default function Page() {
                               },
                             ].map((group) => (
                               <div key={group.title} className="bg-secondary p-4 sm:p-6 rounded-lg border border-gray-200">
-                                <h4 className="text-lg sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-1 md:gap-2">
+                                <h4 className="text-base sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-1 md:gap-2">
                                   <span className="text-xl sm:text-2xl">{group.icon}</span>
                                   {group.title}
                                 </h4>
@@ -1617,7 +1633,7 @@ export default function Page() {
                                       key={item.key}
                                       className="flex items-center justify-between p-2 sm:p-3 bg-card rounded-lg hover:bg-secondary cursor-pointer transition-colors duration-150 border border-gray-200"
                                     >
-                                      <span className="text-base sm:text-foreground font-medium">{item.label}</span>
+                                      <span className="text-sm sm:text-base font-medium text-foreground">{item.label}</span>
                                       <input
                                         type="checkbox"
                                         checked={pickupDropoffOptions[item.key as keyof typeof pickupDropoffOptions]}
@@ -1751,7 +1767,7 @@ export default function Page() {
                         <div className="text-center">
                           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 text-primary text-balance leading-tight">
                             Rental Buddy Shakkii
-                          </h2>
+                      </h2>
                           <p className="text-xl sm:text-2xl text-muted-foreground italic">
                             The operational brain of your entire rental business
                           </p>
@@ -2070,7 +2086,7 @@ export default function Page() {
 
               {currentSlide === 3 && (
                 <div className="animate-in fade-in slide-in-from-right duration-500">
-                  <h2 className="text-3xl sm:text-4xl font-bold mb-6 md:mb-10 text-primary text-balance">
+                  <h2 className={`${sectionHeading} mb-6 md:mb-10`}>
                     Demo
                   </h2>
                   <div className="space-y-4 md:space-y-6 text-base sm:text-xl text-muted-foreground leading-relaxed">
@@ -2081,7 +2097,7 @@ export default function Page() {
 
               {currentSlide === 4 && (
                 <div className="animate-in fade-in slide-in-from-right duration-500">
-                  <h2 className="text-3xl sm:text-4xl font-bold mb-6 md:mb-10 text-primary text-balance">
+                  <h2 className={`${sectionHeading} mb-6 md:mb-10`}>
                     Implementation
                   </h2>
                   <div className="space-y-4 md:space-y-6 text-base sm:text-xl text-muted-foreground leading-relaxed">
@@ -2092,7 +2108,7 @@ export default function Page() {
 
               {currentSlide === 5 && (
                 <div className="animate-in fade-in slide-in-from-right duration-500">
-                  <h2 className="text-3xl sm:text-4xl font-bold mb-6 md:mb-10 text-primary text-balance">
+                  <h2 className={`${sectionHeading} mb-6 md:mb-10`}>
                     Next Steps
                   </h2>
                   <div className="space-y-4 md:space-y-6 text-base sm:text-xl text-muted-foreground leading-relaxed">
@@ -2177,7 +2193,7 @@ export default function Page() {
               onClick={(e) => {
                 e.stopPropagation()
                 if (lightboxSource === 'spatial') {
-                  prevCarouselImage()
+                prevCarouselImage()
                 } else if (lightboxSource === 'technical') {
                   prevTechFoundationImage()
                 } else if (lightboxSource === 'pickup') {
@@ -2198,7 +2214,7 @@ export default function Page() {
               onClick={(e) => {
                 e.stopPropagation()
                 if (lightboxSource === 'spatial') {
-                  nextCarouselImage()
+                nextCarouselImage()
                 } else if (lightboxSource === 'technical') {
                   nextTechFoundationImage()
                 } else if (lightboxSource === 'pickup') {
@@ -2318,4 +2334,3 @@ export default function Page() {
       </div>
     )
   }
-}
