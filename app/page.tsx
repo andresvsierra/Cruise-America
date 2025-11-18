@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { database, ref, set, push } from "@/lib/firebase"
+import { database, ref, set, push, update } from "@/lib/firebase"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { 
@@ -251,6 +251,8 @@ export default function Page() {
   const [currentSubTab, setCurrentSubTab] = useState(0)
   const [showWelcome, setShowWelcome] = useState(true)
   const [companyName, setCompanyName] = useState('')
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
   const [presentationDate, setPresentationDate] = useState(
     new Date().toISOString().split('T')[0]
   )
@@ -289,6 +291,11 @@ export default function Page() {
     dtcCodes: true,
     batteryAlerts: true,
     twelveMonthHistory: true, // Set to true by default
+  })
+  const [trackitQuestionnaire, setTrackitQuestionnaire] = useState({
+    decisionData: '',
+    predictionNeeds: '',
+    additionalComments: '',
   })
   const [aiDataIntelligence, setAiDataIntelligence] = useState({
     lateMissedReturnPrediction: false, // New field
@@ -413,6 +420,14 @@ export default function Page() {
       alert('Please enter a company name')
       return
     }
+    if (!fullName.trim()) {
+      alert('Please enter a full name')
+      return
+    }
+    if (!email.trim()) {
+      alert('Please enter an email address')
+      return
+    }
 
     try {
       // Create new session in Firebase
@@ -422,6 +437,8 @@ export default function Page() {
 
       await set(newSessionRef, {
         companyName: companyName.trim(),
+        fullName: fullName.trim(),
+        email: email.trim(),
         presentationDate,
         createdAt: new Date().toISOString(),
         trackingEssentials,
@@ -448,6 +465,8 @@ export default function Page() {
       const sessionRef = ref(database, `sessions/${sessionId}`)
       await set(sessionRef, {
         companyName,
+        fullName,
+        email,
         presentationDate,
         createdAt: new Date().toISOString(),
         lastUpdated: new Date().toISOString(),
@@ -533,6 +552,45 @@ export default function Page() {
                 />
               </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="fullName" className="text-base font-medium text-foreground mb-2 block">
+                    Full Name
+                  </Label>
+                  <Input
+                    id="fullName"
+                    type="text"
+                    placeholder="Enter full name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="text-base p-4 border-2 focus:border-primary"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleStartPresentation()
+                      }
+                    }}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email" className="text-base font-medium text-foreground mb-2 block">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="text-base p-4 border-2 focus:border-primary"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleStartPresentation()
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
               <div>
                 <Label htmlFor="presentationDate" className="text-base font-medium text-foreground mb-2 block">
                   Presentation Date
@@ -563,43 +621,33 @@ export default function Page() {
     <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
       <header className="border-b border-gray-200 bg-white sticky top-0 z-20 shadow-sm">
         <div className="w-full">
-          <div className="flex items-center justify-between px-4 sm:px-6 py-3 gap-3 bg-white/80 backdrop-blur supports-[backdrop-filter]:backdrop-blur-md">
+          <div className="flex items-center justify-start px-4 sm:px-6 py-3 gap-3 bg-white/80 backdrop-blur supports-[backdrop-filter]:backdrop-blur-md">
             <div className="flex items-center gap-2">
-              <img src="/icon-light-32x32.png" alt="Rental Buddy" className="h-8 w-8 rounded-full object-cover hidden sm:block" />
-              <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Rental Buddy</p>
-                <p className="text-sm font-semibold text-foreground">Operator Workspace</p>
-              </div>
+              <img src="/images/shaka_round_orange.png" alt="Workspace logo" className="h-9 w-9 rounded-full object-cover" />
             </div>
-            <button
-              className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground hover:text-primary hover:border-primary transition-colors"
-              onClick={() => setShowWelcome(true)}
-            >
-              Restart
-            </button>
           </div>
           <div className="w-full overflow-hidden">
             <nav className="flex gap-2 sm:gap-4 md:gap-6 overflow-x-auto px-4 sm:px-6 py-3 scrollbar-hide min-h-[54px]">
-              {slides.map((slide, index) => {
-                return (
-                  <button
-                    key={slide.id}
-                    onClick={() => goToSlide(index)}
-                    className={`
+            {slides.map((slide, index) => {
+              return (
+                <button
+                  key={slide.id}
+                  onClick={() => goToSlide(index)}
+                  className={`
                       relative text-xs sm:text-sm md:text-base font-medium transition-all duration-200 flex-shrink-0 whitespace-nowrap
                       px-3 py-1.5 rounded-full border
-                      ${
-                        currentSlide === index
+                    ${
+                      currentSlide === index
                           ? "text-primary border-primary bg-primary/10"
                           : "text-muted-foreground border-transparent hover:text-primary hover:bg-primary/5"
-                      }
-                    `}
-                  >
-                    {slide.tabLine1}
-                  </button>
-                )
-              })}
-            </nav>
+                    }
+                  `}
+                >
+                  {slide.tabLine1}
+                </button>
+              )
+            })}
+          </nav>
           </div>
         </div>
       </header>
@@ -610,24 +658,24 @@ export default function Page() {
           {currentSlide === 2 && (
             <div className="mb-6 md:mb-8">
               <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center">
-                {productSubTabs.map((subTab, index) => {
-                  return (
-                    <button
-                      key={subTab.id}
-                      onClick={() => setCurrentSubTab(index)}
-                      className={`
+                  {productSubTabs.map((subTab, index) => {
+                    return (
+                      <button
+                        key={subTab.id}
+                        onClick={() => setCurrentSubTab(index)}
+                        className={`
                         relative px-4 md:px-6 py-2 text-sm md:text-base font-medium transition-all duration-200 rounded-full
-                        ${
-                          currentSubTab === index
-                            ? "text-white bg-primary font-semibold shadow-md"
+                          ${
+                            currentSubTab === index
+                              ? "text-white bg-primary font-semibold shadow-md"
                             : "text-muted-foreground hover:text-primary hover:bg-primary/10 bg-card border border-border"
-                        }
-                      `}
-                    >
-                      {subTab.tabLine1}
-                    </button>
-                  )
-                })}
+                          }
+                        `}
+                      >
+                        {subTab.tabLine1}
+                      </button>
+                    )
+                  })}
               </div>
             </div>
           )}
@@ -792,9 +840,6 @@ export default function Page() {
                         </h3>
                         <p className="text-base sm:text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-foreground">
                           for Your Vehicle Rental Operations
-                        </p>
-                        <p className="text-base sm:text-xl md:text-2xl font-semibold text-center mb-6 md:mb-8 text-muted-foreground">
-                          Our AI-Ready Platform | Beyond SaaS
                         </p>
                         
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 items-center justify-items-center">
@@ -1285,6 +1330,13 @@ export default function Page() {
                                       rows={2}
                                       className="w-full p-3 rounded-lg border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-200 text-base text-foreground placeholder:text-muted-foreground resize-none"
                                       placeholder="Your answer..."
+                                      value={trackitQuestionnaire.decisionData}
+                                      onChange={(e) =>
+                                        setTrackitQuestionnaire((prev) => ({
+                                          ...prev,
+                                          decisionData: e.target.value,
+                                        }))
+                                      }
                                     />
                                   </div>
                                   
@@ -1296,6 +1348,13 @@ export default function Page() {
                                       rows={2}
                                       className="w-full p-3 rounded-lg border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-200 text-base text-foreground placeholder:text-muted-foreground resize-none"
                                       placeholder="Your answer..."
+                                      value={trackitQuestionnaire.predictionNeeds}
+                                      onChange={(e) =>
+                                        setTrackitQuestionnaire((prev) => ({
+                                          ...prev,
+                                          predictionNeeds: e.target.value,
+                                        }))
+                                      }
                                     />
                                   </div>
                                   
@@ -1307,6 +1366,13 @@ export default function Page() {
                                       rows={2}
                                       className="w-full p-3 rounded-lg border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-200 text-base text-foreground placeholder:text-muted-foreground resize-none"
                                       placeholder="Your answer..."
+                                      value={trackitQuestionnaire.additionalComments}
+                                      onChange={(e) =>
+                                        setTrackitQuestionnaire((prev) => ({
+                                          ...prev,
+                                          additionalComments: e.target.value,
+                                        }))
+                                      }
                                     />
                                   </div>
                                 </div>
@@ -1327,6 +1393,7 @@ export default function Page() {
                                       await saveSelectionsToFirebase('trackitSelections', {
                                         trackingEssentials,
                                         aiDataIntelligence,
+                                    questionnaire: trackitQuestionnaire,
                                         savedAt: new Date().toISOString(),
                                       })
                                       alert('Your Trackit selections have been saved!')
@@ -1780,239 +1847,54 @@ export default function Page() {
                           <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-md flex flex-col">
                             <h3 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4 text-foreground">Shakkii Intro Video (1 min)</h3>
                             
-                            <div className="flex-1 bg-black rounded-lg md:rounded-xl overflow-hidden border border-border min-h-[200px] sm:min-h-[300px] flex items-center justify-center">
-                              <p className="text-white text-sm sm:text-base">[Video placeholder - Insert Shakkii intro video]</p>
+                            <div className="flex-1 bg-black rounded-lg md:rounded-xl overflow-hidden border border-border min-h-[200px] sm:min-h-[300px]">
+                              <iframe
+                                className="w-full h-full min-h-[200px] sm:min-h-[300px]"
+                                src="https://www.youtube.com/embed/PXu-G7ftU5M"
+                                title="Rental Buddy Shakkii Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              />
                             </div>
                           </div>
 
-                          <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-md flex items-center">
+                          <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-md flex flex-col justify-center">
+                            <h3 className="text-xl sm:text-2xl font-bold mb-3 text-foreground">Unified Data Integration</h3>
                             <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed">
-                              {"An agentic Kanban board where every board, list, and card is an AI agent that prioritizes work and moves tasks automatically.\n\nIt becomes the single place where all your data arrives: GPS events, vehicle status, renter actions, and operational workflows, giving your entire team one clear and unified view of operations."}
+                              Shakkii provides a single source of truth by integrating disparate data sources, including rental status, service orders, vehicle location, and registration data. This unified view improves decision-making around asset deployment and utilization.
                             </p>
                           </div>
                         </div>
 
                         <div className="bg-card p-6 sm:p-8 rounded-xl md:rounded-2xl border border-border shadow-lg">
                           <h3 className="text-2xl sm:text-3xl font-bold mb-6 md:mb-8 text-primary text-center">
-                            Core Components
+                            What it does
                           </h3>
-                          
-                          <div className="space-y-6 md:space-y-8">
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <div className="flex items-start gap-3 md:gap-4">
-                                <div className="flex-shrink-0">
-                                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg sm:text-xl font-bold shadow-md">
-                                    1
-                                  </div>
-                                </div>
-                                <div className="flex-1">
-                                  <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2 md:mb-3">Agentic Kanban Board</h4>
-                                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-3 md:mb-4">
-                                    A live board where every column, card, and workflow is an AI agent.
-                                  </p>
-                                  <ul className="space-y-2 text-sm sm:text-base text-foreground">
-                                    <li className="flex items-start gap-2">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                      <span>Prioritizes work automatically</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                      <span>Highlights what matters today</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                      <span>Flags delays and bottlenecks</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                      <span>Gives full visibility to every team member</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                      <span>Uses Kanban methodology for real-time flow</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                      <span>Reduces manual coordination</span>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
 
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <div className="flex items-start gap-3 md:gap-4">
-                                <div className="flex-shrink-0">
-                                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg sm:text-xl font-bold shadow-md">
-                                    2
-                                  </div>
-                                </div>
-                                <div className="flex-1">
-                                  <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2 md:mb-3">Form Generator & Operational Modules</h4>
-                                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-3 md:mb-4">
-                                    Structured forms that feed AI agents with the exact data they need.
-                                  </p>
-                                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3 mb-3 md:mb-4">
-                                    {['Maintenance', 'Inspections', 'Damage', 'Cleaning', 'Customer interactions', 'Custom processes'].map((item, idx) => (
-                                      <div key={idx} className="bg-card px-3 py-2 rounded-lg border border-border text-sm sm:text-base text-foreground font-medium">
-                                        {item}
-                                      </div>
-                                    ))}
-                                  </div>
-                                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-3 md:mt-4">
-                                    Forms become the starting point of automated workflows, creating tasks, assigning work, and triggering actions across the system.
-                                  </p>
-                                </div>
-                              </div>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 text-base sm:text-lg leading-relaxed text-foreground">
+                            <div className="bg-secondary p-4 sm:p-5 rounded-xl border border-border shadow-sm">
+                              <h4 className="font-bold text-lg sm:text-xl mb-2 text-primary">Ensures consistent execution through custom checklists</h4>
+                              <p>Operational checklists keep processes aligned across branches and crews, eliminating gaps in handoffs and inspections.</p>
                             </div>
-
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <div className="flex items-start gap-3 md:gap-4">
-                                <div className="flex-shrink-0">
-                                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg sm:text-xl font-bold shadow-md">
-                                    3
-                                  </div>
-                                </div>
-                                <div className="flex-1">
-                                  <h4 className="text-lg sm:text-xl font-bold text-foreground mb-2 md:mb-3">AI Training via Simple Prompts</h4>
-                                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-3 md:mb-4">
-                                    Users train each agent with short, guided prompts.
-                                  </p>
-                                  <div className="space-y-2 md:space-y-3">
-                                    <div className="bg-card p-3 sm:p-4 rounded-lg border border-border">
-                                      <p className="text-sm sm:text-base text-foreground italic">
-                                        "When a drop-off happens, create cleaning and inspection tasks."
-                                      </p>
-                                    </div>
-                                    <div className="bg-card p-3 sm:p-4 rounded-lg border border-border">
-                                      <p className="text-sm sm:text-base text-foreground italic">
-                                        "If a vehicle has a DTC code, notify maintenance."
-                                      </p>
-                                    </div>
-                                    <div className="bg-card p-3 sm:p-4 rounded-lg border border-border">
-                                      <p className="text-sm sm:text-base text-foreground italic">
-                                        "Prioritize all units with bookings today."
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-3 md:mt-4">
-                                    Every agent learns expectations and handles tasks automatically.
-                                  </p>
-                                </div>
-                              </div>
+                            <div className="bg-secondary p-4 sm:p-5 rounded-xl border border-border shadow-sm">
+                              <h4 className="font-bold text-lg sm:text-xl mb-2 text-primary">Improves team efficiency with clear prioritization</h4>
+                              <p>Every task is ranked by urgency and impact, helping managers and frontline staff focus on what keeps rentals flowing.</p>
+                            </div>
+                            <div className="bg-secondary p-4 sm:p-5 rounded-xl border border-border shadow-sm">
+                              <h4 className="font-bold text-lg sm:text-xl mb-2 text-primary">Increases team output without increasing headcount</h4>
+                              <p>Automation handles repetitive steps while agents surface exceptions, allowing the same team to handle more vehicles and renters.</p>
                             </div>
                           </div>
                         </div>
 
-                        <div className="bg-card p-6 sm:p-8 rounded-xl md:rounded-2xl border border-border shadow-lg">
-                          <h3 className="text-2xl sm:text-3xl font-bold mb-6 md:mb-8 text-primary text-center">Why It Matters</h3>
-                          
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
-                                <FaDesktop className="text-primary" />
-                                A single operational source of truth
-                              </h4>
-                              <p className="text-base sm:text-lg text-muted-foreground mb-3">
-                                The Master Operator combines all your data:
-                              </p>
-                              <ul className="space-y-2 text-sm sm:text-base text-foreground">
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>GPS movement & status</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>Renter data</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>Vehicle data</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>Pick-up / drop-off events</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>Internal tasks and workflows</span>
-                                </li>
-                              </ul>
-                              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-3 font-semibold">
-                                Everything arrives to one place where your team can take action instantly.
-                              </p>
-                            </div>
-
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
-                                <FaCheckCircle className="text-primary" />
-                                Clarity for every role
-                              </h4>
-                              <ul className="space-y-2 text-sm sm:text-base text-foreground">
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>What needs to be done now</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>What is delayed</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>What is ready</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>What is blocked</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-                                  <span>What needs attention today</span>
-                                </li>
-                              </ul>
-                            </div>
-
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
-                                <FaBullseye className="text-primary" />
-                                Better prioritization
-                              </h4>
-                              <p className="text-base sm:text-lg text-muted-foreground">
-                                AI identifies the most important tasks and orders them by urgency, schedule, and impact.
-                              </p>
-                            </div>
-
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
-                                <FaShieldAlt className="text-primary" />
-                                Less chaos. More control.
-                              </h4>
-                              <p className="text-base sm:text-lg text-muted-foreground">
-                                Teams stop guessing and start operating with precision.
-                              </p>
-                            </div>
-
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
-                                <FaExclamationTriangle className="text-primary" />
-                                Bottleneck reduction
-                              </h4>
-                              <p className="text-base sm:text-lg text-muted-foreground">
-                                Master Operator detects slow points and helps teams solve them faster.
-                              </p>
-                            </div>
-
-                            <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                              <h4 className="text-lg sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
-                                <FaRocket className="text-primary" />
-                                Operational efficiency
-                              </h4>
-                              <p className="text-base sm:text-lg text-muted-foreground">
-                                Everything becomes faster, clearer, more consistent, and easier to manage.
-                              </p>
-                            </div>
-                          </div>
+                        <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-md flex justify-center">
+                          <img
+                            src="/images/rental_blocks_shakkii.png"
+                            alt="Rental Buddy Shakkii operational flow"
+                            className="w-[60%] md:w-1/2 rounded-lg shadow-lg border border-border object-cover"
+                          />
                         </div>
+
                       </div>
 
                       <div className="bg-secondary p-6 sm:p-8 rounded-xl md:rounded-2xl border border-border shadow-lg">
@@ -2179,7 +2061,11 @@ export default function Page() {
             onClick={() => setLightboxOpen(false)}
           >
             <button
-              onClick={() => setLightboxOpen(false)}
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                setLightboxOpen(false)
+              }}
               className="absolute top-4 right-4 text-white hover:text-gray-300 p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors z-10"
               aria-label="Close lightbox"
             >
@@ -2190,6 +2076,7 @@ export default function Page() {
             </button>
 
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation()
                 if (lightboxSource === 'spatial') {
@@ -2211,6 +2098,7 @@ export default function Page() {
             </button>
 
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation()
                 if (lightboxSource === 'spatial') {

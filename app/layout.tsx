@@ -7,25 +7,14 @@ const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: '360 Sierra',
+  description: '360 Sierra presentation workspace',
   generator: 'v0.app',
   icons: {
     icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+      '/images/shaka%20favicon.jpeg',
     ],
-    apple: '/apple-icon.png',
+    apple: '/images/shaka%20favicon.jpeg',
   },
 }
 
