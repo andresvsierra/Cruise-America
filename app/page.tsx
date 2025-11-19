@@ -104,32 +104,52 @@ const pickupCarouselImages = [
 
 const pickupJourneyImages = [
   {
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-26%20at%205.03.32%E2%80%AFPM-N8wgrCFBOkL2GST91myPxDEgIb1vJD.png",
-    alt: "Welcome screen - Reservation confirmation"
+    src: "/images/screenshots/A-RB.png",
+    alt: "Screenshot A-RB"
   },
   {
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-26%20at%205.04.03%E2%80%AFPM-ScoOgAyOqDxM8VyChz4EZBhDLOFKQd.png",
-    alt: "ID Verification - Driver license photo capture"
+    src: "/images/screenshots/B-RB.png",
+    alt: "Screenshot B-RB"
   },
   {
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-26%20at%205.06.44%E2%80%AFPM-34ZsGoPFBB6dZtoPEPPxlTo8mH2Tik.png",
-    alt: "Insurance - Coverage options selection"
+    src: "/images/screenshots/c-RB.png",
+    alt: "Screenshot C-RB"
   },
   {
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-26%20at%205.09.00%E2%80%AFPM-ywoeh6nM54QsTApBrp84unQAgIqZoB.png",
-    alt: "Vehicle Access - Key box code display"
+    src: "/images/screenshots/D-RB.png",
+    alt: "Screenshot D-RB"
   },
   {
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-26%20at%205.07.29%E2%80%AFPM-mDqaGeiytTuUw2amgIahaDGJsy3Mbv.png",
-    alt: "Contract Signature - Digital signature capture"
+    src: "/images/screenshots/E-RB.png",
+    alt: "Screenshot E-RB"
   },
   {
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-26%20at%205.11.01%E2%80%AFPM-TBGaxBfhCCTQAEBNuDGFUYpwL5TxVv.png",
-    alt: "Success - Vehicle unlocked confirmation"
+    src: "/images/screenshots/F-RB.png",
+    alt: "Screenshot F-RB"
   },
   {
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-07-26%20at%205.07.47%E2%80%AFPM-usr6DOroXSHc6hop3o28eusxIK9AL2.png",
-    alt: "Onboarding Video - Instructional content"
+    src: "/images/screenshots/G-RB.png",
+    alt: "Screenshot G-RB"
+  },
+  {
+    src: "/images/screenshots/H-RB.png",
+    alt: "Screenshot H-RB"
+  },
+  {
+    src: "/images/screenshots/I-RB.png",
+    alt: "Screenshot I-RB"
+  },
+  {
+    src: "/images/screenshots/J-RB.png",
+    alt: "Screenshot J-RB"
+  },
+  {
+    src: "/images/screenshots/K-RB.png",
+    alt: "Screenshot K-RB"
+  },
+  {
+    src: "/images/screenshots/L-RB.png",
+    alt: "Screenshot L-RB"
   }
 ]
 
