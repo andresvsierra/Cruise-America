@@ -8,14 +8,19 @@ declare global {
   }
 }
 
-const databaseURL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL
+const fallbackDatabaseURL =
+  'https://rentalbuddy-intro-default-rtdb.firebaseio.com/'
 
-if (!databaseURL) {
-  throw new Error('Missing NEXT_PUBLIC_FIREBASE_DATABASE_URL environment variable')
+const envDatabaseURL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL?.trim()
+
+if (!envDatabaseURL && process.env.NODE_ENV === 'development') {
+  console.warn(
+    'NEXT_PUBLIC_FIREBASE_DATABASE_URL is not set; using the RentalBuddy Intro default database URL.'
+  )
 }
 
 const firebaseConfig = {
-  databaseURL,
+  databaseURL: envDatabaseURL || fallbackDatabaseURL,
 }
 
 const app = initializeApp(firebaseConfig)

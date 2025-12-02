@@ -55,7 +55,8 @@ Continue building your app on:
    Asegúrate de que el proyecto esté en un repositorio (GitHub/GitLab/Bitbucket). Vercel desplegará cada push a la rama seleccionada.
 
 2. **Variables de entorno (Dashboard de Vercel → Project Settings → Environment Variables)**  
-   - `NEXT_PUBLIC_FIREBASE_DATABASE_URL` → URL de tu Realtime Database (si necesitas apuntar a otra instancia).
+   - `NEXT_PUBLIC_FIREBASE_DATABASE_URL` → URL de tu Realtime Database. El repositorio apunta por defecto a `https://rentalbuddy-intro-default-rtdb.firebaseio.com/`, pero define esta variable en Vercel para poder cambiarla sin redeploys.
+   - `NEXT_PUBLIC_RECAPTCHA_KEY` → clave de reCAPTCHA v3 usada por App Check en el navegador.
 
 3. **Ajustes recomendados**  
    - Framework preset: `Next.js`

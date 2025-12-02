@@ -263,9 +263,9 @@ const summarizeSelections = (
 
 const slides = [
   {
-    id: "agenda",
-    title: "Agenda",
-    tabLine1: "Agenda",
+    id: "welcome",
+    title: "Welcome",
+    tabLine1: "Welcome",
     tabLine2: "",
   },
   {
@@ -617,7 +617,7 @@ export default function Page() {
                 Welcome to Rental Buddy
               </h1>
               <p className="text-lg text-muted-foreground">
-                Let's start your presentation
+                Let&apos;s start your presentation
               </p>
             </div>
 
@@ -770,26 +770,22 @@ export default function Page() {
           <div className="relative">
             <div className="bg-card rounded-xl md:rounded-2xl border border-gray-200 p-6 sm:p-10 md:p-16 min-h-[400px] md:min-h-[550px] flex flex-col justify-center shadow-lg animate-in fade-in duration-500">
               {currentSlide === 0 && (
-                <div className="animate-in fade-in slide-in-from-right duration-500">
-                  <h2 className={`${sectionHeading} mb-6 md:mb-10 text-left`}>
-                    Agenda
-                  </h2>
-                  <div className="space-y-4 md:space-y-5 text-foreground leading-relaxed">
-                    {[
-                      'Introductions',
-                      'Our Company & Vision',
-                      'Product Overview',
-                      'Why It Works Better Together — Full Demo',
-                      'Implementation Plan',
-                      'Next Steps'
-                    ].map((item, idx) => (
-                      <div key={idx} className="flex items-start gap-3 md:gap-4">
-                        <span className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs md:text-sm font-medium">
-                          {idx + 1}
-                        </span>
-                        <p className="pt-0.5 md:pt-1 text-sm md:text-base">{item}</p>
-                      </div>
-                    ))}
+                <div className="animate-in fade-in slide-in-from-right duration-500 text-center space-y-6 md:space-y-8">
+                  <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-muted-foreground">
+                    Welcome
+                  </p>
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground leading-tight tracking-tight flex flex-wrap justify-center gap-x-2">
+                      <span className="text-4xl sm:text-5xl md:text-6xl font-serif italic font-bold text-[#ff7a45]">
+                        &ldquo;Companies
+                      </span>
+                      <span className="font-sans text-3xl sm:text-4xl md:text-[52px] font-semibold text-foreground">
+                        don&apos;t lack data; they lack coordination.&rdquo;
+                      </span>
+                    </div>
+                    <p className="text-base sm:text-lg text-muted-foreground italic">
+                      — Rental Buddy Team
+                    </p>
                   </div>
                 </div>
               )}
@@ -1059,7 +1055,7 @@ export default function Page() {
                             <div className="flex items-start gap-3 md:gap-4 flex-1">
                               <span className="w-2 h-2 rounded-full bg-primary mt-1.5 md:mt-2 flex-shrink-0"></span>
                               <div className="flex-1">
-                                <h4 className="font-bold text-foreground text-lg sm:text-xl mb-2 md:mb-3 min-h-[3rem] flex items-center">We don't replace RCM</h4>
+                                <h4 className="font-bold text-foreground text-lg sm:text-xl mb-2 md:mb-3 min-h-[3rem] flex items-center">We don&apos;t replace RCM</h4>
                                 <p className="text-muted-foreground min-h-[5rem]">
                                   We add an <span className="font-bold text-primary">AI layer</span> that <span className="font-bold">connects to RCM</span> — <span className="font-bold">automating</span> and <span className="font-bold">linking every step</span> from booking to return.
                                 </p>
@@ -1584,7 +1580,7 @@ export default function Page() {
                           <h3 className="text-2xl sm:text-4xl font-bold mb-3 md:mb-4 text-primary text-center">Complete Digital Journey</h3>
                           <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed mb-4 md:mb-5 text-center max-w-4xl mx-auto font-medium">
                             Transform every rental into a guided digital flow from verification to return. 
-                            Renters move on their own time, not the branch's.
+                            Renters move on their own time, not the branch&apos;s.
                           </p>
                           
                           <div className="mb-6 md:mb-8">
