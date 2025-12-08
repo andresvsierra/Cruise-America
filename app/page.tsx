@@ -86,6 +86,10 @@ const trackitAiLabels = buildLabelMap(trackitAiOptions, 'Trackit AI')
 
 const carouselImages = [
   {
+    src: "/Gemini_Generated_Image_lbl5lylbl5lylbl5.png",
+    alt: "Birds-eye AI visualization of a vehicle fleet across a stylized city map"
+  },
+  {
     src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/H3oregon-MXOExb3dMEb2B8ronWGWUl3scdp8WW.jpg",
     alt: "H3 Oregon hexagonal grid map showing spatial data analysis"
   },
@@ -1140,12 +1144,12 @@ export default function Page() {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                           <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-md flex flex-col h-full">
-                            <h3 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4 text-foreground">Trackit Intro Video (1 min)</h3>
+                            <h3 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4 text-foreground">Trackit Intro Video (20 sec)</h3>
                             
                             <div className="flex-1 bg-black rounded-lg md:rounded-xl overflow-hidden border border-border min-h-[200px] sm:min-h-[300px]">
                               <iframe
                                 className="w-full h-full min-h-[200px] sm:min-h-[300px]"
-                                src="https://www.youtube.com/embed/VhhSSdp1tyo"
+                                src="https://www.youtube.com/embed/y6xqKsA1Xh4"
                                 title="Rental Buddy Trackit Demo"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
@@ -1857,7 +1861,7 @@ export default function Page() {
                             <div className="flex-1 bg-black rounded-lg md:rounded-xl overflow-hidden border border-border min-h-[200px] sm:min-h-[300px]">
                               <iframe
                                 className="w-full h-full min-h-[200px] sm:min-h-[300px]"
-                                src="https://www.youtube.com/embed/y6xqKsA1Xh4"
+                                src="https://www.youtube.com/embed/hqgyjSo7C-I"
                                 title="Rental Buddy Shakkii Demo"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
