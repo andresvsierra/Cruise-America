@@ -797,40 +797,35 @@ export default function Page() {
                   </h2>
                   <div className="space-y-5 sm:space-y-8 text-foreground leading-relaxed max-w-5xl mx-auto">
                     <p className="text-base sm:text-xl font-bold text-primary border-l-4 border-primary pl-3 md:pl-4 py-2">
-                      Built by operators, for operators.
+                      We turn operational chaos into a coordinated rental rhythm.
                     </p>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 text-sm sm:text-base md:text-lg">
                       <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Who We Are</h3>
+                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Operators + Engineers</h3>
                         <p className="text-foreground leading-relaxed">
-                          <span className="font-semibold">360 Sierra</span> is a{" "}
-                          <span className="font-bold text-primary">U.S.-based startup</span> created by a team with{" "}
-                          <span className="font-bold text-primary">over 20 years of experience</span> in software and hardware development.
+                          We ran rental fleets and built the technology behind them, so every workflow is designed with on-the-ground realities in mind.
                         </p>
                       </div>
 
                       <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">The Problem We Saw</h3>
+                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Where Data Gets Stuck</h3>
                         <p className="text-foreground leading-relaxed">
-                          After running our own <span className="font-bold text-primary">RV rental business</span>, we saw how hard it is to manage operations across{" "}
-                          <span className="font-bold">fragmented tools and disconnected systems</span>.
+                          Teams jump between Your Booking system, trackers, spreadsheets, and chats. Information exists—but it rarely moves together or reaches the right person on time.
                         </p>
                       </div>
 
                       <div className="bg-secondary p-4 sm:p-6 rounded-xl border border-border shadow-sm">
-                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Our Solution</h3>
+                        <h3 className="text-lg sm:text-2xl font-bold text-foreground mb-2 md:mb-3">Coordination Engine</h3>
                         <p className="text-foreground leading-relaxed">
-                          That experience led us to build <span className="font-bold text-primary">Rental Buddy</span>, a platform that combines{" "}
-                          <span className="font-bold">AI</span> and{" "}
-                          <span className="font-bold">IoT</span> to connect data, simplify operations, and automate workflows.
+                          Rental Buddy orchestrates AI + IoT workflows that keep every update flowing through a single interface, so teams execute with clarity.
                         </p>
                       </div>
                     </div>
                     
                     <div className="bg-secondary border-l-4 border-primary p-4 sm:p-6 rounded-lg shadow-sm">
                       <p className="text-base sm:text-xl font-semibold text-foreground italic">
-                        {"Your company will benefit from using its data with AI to make faster decisions and manage operations with greater clarity and control."}
+                        {"Coordination beats more dashboards. We give rentals one source of truth so every decision happens faster."}
                       </p>
                     </div>
 
@@ -927,11 +922,11 @@ export default function Page() {
                         
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 items-center justify-items-center">
                           <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
-                            <img 
-                              src="/images/design-mode/rcm-logo.png" 
-                              alt="RCM" 
-                              className="max-w-full max-h-full object-contain"
-                            />
+                          <img 
+                            src="/images/design-mode/rcm-logo.png" 
+                            alt="Your Booking system" 
+                            className="max-w-full max-h-full object-contain"
+                          />
                           </div>
                           <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
                             <img 
@@ -968,6 +963,13 @@ export default function Page() {
                               className="max-w-full max-h-full object-contain"
                             />
                           </div>
+                        <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
+                          <img 
+                            src="/your_booking_logo.png" 
+                            alt="Your Booking" 
+                            className="max-w-full max-h-full object-contain"
+                          />
+                        </div>
                         </div>
                       </div>
                     </div>
@@ -1004,7 +1006,6 @@ export default function Page() {
                                   1
                                 </div>
                                 <div className="font-bold text-foreground text-sm sm:text-lg mb-1 md:mb-2">Booking</div>
-                                <div className="text-xs sm:text-sm text-muted-foreground bg-secondary px-2 py-1 rounded-lg border border-border inline-block">RCM</div>
                               </div>
                               
                               <div className="flex-1 min-w-[80px] text-center px-1">
@@ -1055,9 +1056,9 @@ export default function Page() {
                             <div className="flex items-start gap-3 md:gap-4 flex-1">
                               <span className="w-2 h-2 rounded-full bg-primary mt-1.5 md:mt-2 flex-shrink-0"></span>
                               <div className="flex-1">
-                                <h4 className="font-bold text-foreground text-lg sm:text-xl mb-2 md:mb-3 min-h-[3rem] flex items-center">We don&apos;t replace RCM</h4>
+                                <h4 className="font-bold text-foreground text-lg sm:text-xl mb-2 md:mb-3 min-h-[3rem] flex items-center">We don&apos;t replace your booking system</h4>
                                 <p className="text-muted-foreground min-h-[5rem]">
-                                  We add an <span className="font-bold text-primary">AI layer</span> that <span className="font-bold">connects to RCM</span> — <span className="font-bold">automating</span> and <span className="font-bold">linking every step</span> from booking to return.
+                                  We add an <span className="font-bold text-primary">AI layer</span> that <span className="font-bold">connects to Your Booking system</span> — <span className="font-bold">automating</span> and <span className="font-bold">linking every step</span> from booking to return.
                                 </p>
                               </div>
                             </div>
@@ -1081,7 +1082,7 @@ export default function Page() {
                               <div className="flex-1">
                                 <h4 className="font-bold text-foreground text-lg sm:text-xl mb-2 md:mb-3 min-h-[3rem] flex items-center">Powered by data</h4>
                                 <p className="text-muted-foreground min-h-[5rem]">
-                                  Our system <span className="font-bold">connects</span> <span className="font-bold text-primary">RCM, tracking devices, operations, and user data</span> to <span className="font-bold">reveal patterns</span> and <span className="font-bold">improve decisions</span>.
+                                  Our system <span className="font-bold">connects</span> <span className="font-bold text-primary">Your Booking system, tracking devices, operations, and user data</span> to <span className="font-bold">reveal patterns</span> and <span className="font-bold">improve decisions</span>.
                                 </p>
                               </div>
                             </div>
@@ -1093,7 +1094,7 @@ export default function Page() {
                               <div className="flex-1">
                                 <h4 className="font-bold text-foreground text-lg sm:text-xl mb-2 md:mb-3 min-h-[3rem] flex items-center">One connected flow</h4>
                                 <p className="text-muted-foreground min-h-[5rem]">
-                                  <span className="font-bold">RCM stays your core</span> — Rental Buddy <span className="font-bold text-primary">unifies all operations</span> into a <span className="font-bold text-primary">single source of truth</span>.
+                                  <span className="font-bold">Your Booking system stays your core</span> — Rental Buddy <span className="font-bold text-primary">unifies all operations</span> into a <span className="font-bold text-primary">single source of truth</span>.
                                 </p>
                               </div>
                             </div>
