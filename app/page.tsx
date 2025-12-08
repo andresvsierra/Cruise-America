@@ -1857,7 +1857,7 @@ export default function Page() {
                             <div className="flex-1 bg-black rounded-lg md:rounded-xl overflow-hidden border border-border min-h-[200px] sm:min-h-[300px]">
                               <iframe
                                 className="w-full h-full min-h-[200px] sm:min-h-[300px]"
-                                src="https://www.youtube.com/embed/hqgyjSo7C-I"
+                                src="https://www.youtube.com/embed/y6xqKsA1Xh4"
                                 title="Rental Buddy Shakkii Demo"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
