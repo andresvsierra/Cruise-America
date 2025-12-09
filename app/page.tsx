@@ -812,7 +812,7 @@ export default function Page() {
                         &ldquo;Inconsistency is the only true enemy of scalability.&rdquo;
                       </span>
                       <span className="font-sans text-xl sm:text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
-                        — Principle inspired by W. Edwards Deming &amp; Taiichi Ohno
+                        Principle inspired by W. Edwards Deming and Taiichi Ohno, the fathers of modern operational excellence
                       </span>
                     </div>
                     <p className="text-base sm:text-lg text-muted-foreground italic">
