@@ -26,7 +26,8 @@ import {
   FaFlagCheckered,
   FaChevronDown,
   FaChevronLeft,
-  FaChevronRight
+  FaChevronRight,
+  FaQuoteLeft
 } from 'react-icons/fa'
 import { MdComputer } from 'react-icons/md'
 
@@ -113,6 +114,27 @@ const carouselImages = [
     src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/heatmap-s-wnFJkgRs0tdSoUvQiMJSfPxWggnFCC.png",
     alt: "Heatmap showing utilization density and high-traffic zones"
   }
+]
+
+const pickupDropoffReviews = [
+  {
+    quote: 'The pickup and drop-off process were quick and painless.'
+  },
+  {
+    quote: 'The pick up and drop off were straightforward. I would recommend this company to family and friends!'
+  },
+  {
+    quote: 'Pickup was flawless and hassle free. Without a delay during pickup, we were free to get right on the road.'
+  },
+  {
+    quote: 'Seamless, easy experience with Native Campervans from check-in to check out! Staff were available on call when needed to initially unlock lock box and for last minute checkout questions. Every staff member we interacted with was pleasant and helpful.'
+  },
+  {
+    quote: 'Fantastic communication. Easy pick up and drop off. I was early for my pick up, no problem. Later required a later drop off, again very accommodating.'
+  },
+  {
+    quote: 'Great first time experience with Native Campervans out of Denver. I have used a competitor several times and found the convenience of contactless pickup and drop-off such a benefit to trip planning.'
+  },
 ]
 
 const technicalFoundationImages = [
@@ -284,6 +306,12 @@ const slides = [
     tabLine1: "Rental Buddy",
     tabLine2: "",
     hasSubTabs: true,
+  },
+  {
+    id: "next-steps",
+    title: "Next Steps",
+    tabLine1: "Next Steps",
+    tabLine2: "",
   },
 ]
 
@@ -781,15 +809,82 @@ export default function Page() {
                   <div className="flex flex-col items-center gap-4">
                     <div className="text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground leading-tight tracking-tight flex flex-wrap justify-center gap-x-2">
                       <span className="text-4xl sm:text-5xl md:text-6xl font-serif italic font-bold text-[#ff7a45]">
-                        &ldquo;Companies
+                        &ldquo;Inconsistency is the only true enemy of scalability.&rdquo;
                       </span>
-                      <span className="font-sans text-3xl sm:text-4xl md:text-[52px] font-semibold text-foreground">
-                        don&apos;t lack data; they lack coordination.&rdquo;
+                      <span className="font-sans text-xl sm:text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+                        — Principle inspired by W. Edwards Deming &amp; Taiichi Ohno
                       </span>
                     </div>
                     <p className="text-base sm:text-lg text-muted-foreground italic">
-                      — Rental Buddy Team
+                      Rental Buddy: Controlling Operational Variability.
                     </p>
+                  </div>
+                </div>
+              )}
+
+              {currentSlide === 3 && (
+                <div className="animate-in fade-in slide-in-from-right duration-500">
+                  <h2 className={`${heroHeading} mb-4 md:mb-6 text-center`}>
+                    Next Steps · Phase Zero
+                  </h2>
+                  <p className={`${sectionSubtitle} text-center mb-6`}>
+                    Low risk, high insight. Data-driven validation before full rollout.
+                  </p>
+                  <div className="bg-secondary p-6 sm:p-8 rounded-2xl border border-border shadow-xl space-y-6">
+                    <div>
+                      <p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-muted-foreground">
+                        Phase Zero
+                      </p>
+                      <h3 className="text-2xl sm:text-4xl font-bold text-primary">
+                        The Consistency Pilot
+                      </h3>
+                    </div>
+
+                    <div className="space-y-4 md:space-y-5">
+                      {[
+                        {
+                          label: 'Scope',
+                          text: '50–100 Units · Single Location',
+                          subtext: 'Runs in parallel without disrupting operations.',
+                        },
+                        {
+                          label: 'Duration',
+                          text: '45 Days',
+                        },
+                        {
+                          label: 'Objective',
+                          text: 'Prove reduction in downtime & increase in upsells',
+                        },
+                        {
+                          label: 'Deliverable',
+                          text: 'Comparative Data Report (Pilot vs. Fleet Average)',
+                        },
+                      ].map((item, index) => (
+                        <div key={item.label} className="bg-card p-4 rounded-xl border border-border shadow-sm flex gap-4 items-start">
+                          <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold shadow-md">
+                            {String(index + 1).padStart(2, '0')}
+                          </div>
+                          <div>
+                            <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+                              {item.label}
+                            </p>
+                            <p className="text-lg font-semibold text-primary">{item.text}</p>
+                            {item.subtext && (
+                              <p className="text-sm text-muted-foreground mt-2">{item.subtext}</p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="bg-card rounded-xl border border-dashed border-primary p-4 sm:p-6 text-center">
+                      <p className="text-xl font-bold text-primary mb-2">
+                        “Low Risk. High Insight. Data-Driven Decision.”
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Phase Zero shows how Rental Buddy stabilizes operations before scaling the rollout.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -835,7 +930,13 @@ export default function Page() {
 
                     <div className="bg-secondary p-6 sm:p-8 rounded-xl md:rounded-2xl border border-border shadow-md mt-6 md:mt-8">
                       <p className="font-bold text-foreground mb-4 md:mb-6 text-lg sm:text-2xl text-center">Our AI-Ready Platform | Beyond SaaS</p>
-                      
+                      <div className="mb-6 md:mb-8 flex justify-center">
+                        <img
+                          src="/images/logos_uber_zipcar_toyota.png"
+                          alt="Partner logos"
+                          className="max-w-[70%] sm:max-w-[60%] h-auto object-contain"
+                        />
+                      </div>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                         <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col">
                           <h4 className="font-bold text-base sm:text-xl mb-2 md:mb-3 text-primary min-h-[3rem] flex items-center">
@@ -844,13 +945,6 @@ export default function Page() {
                           <p className="text-sm md:text-base leading-relaxed text-foreground flex-1 min-h-[4rem]">
                             Turn tracking data into clear fleet decisions
                           </p>
-                          <div className="mt-3 pt-3 border-t border-border flex items-center justify-center">
-                            <img 
-                              src="/images/design-mode/uber-logo.png" 
-                              alt="Uber" 
-                              className="h-6 sm:h-8 object-contain opacity-80"
-                            />
-                          </div>
                         </div>
 
                         <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col">
@@ -860,13 +954,6 @@ export default function Page() {
                           <p className="text-sm md:text-base leading-relaxed text-foreground flex-1 min-h-[4rem]">
                             Make renting a vehicle as easy as renting a Zipcar.
                           </p>
-                          <div className="mt-3 pt-3 border-t border-border flex items-center justify-center">
-                            <img 
-                              src="/images/design-mode/zip-cardownload.jpeg" 
-                              alt="Lime" 
-                              className="h-8 sm:h-10 object-contain"
-                            />
-                          </div>
                         </div>
 
                         <div className="bg-card p-4 rounded-xl border border-border shadow-sm flex flex-col">
@@ -876,13 +963,6 @@ export default function Page() {
                           <p className="text-sm md:text-base leading-relaxed text-foreground flex-1 min-h-[4rem]">
                             Simplify daily operations with structure and clarity.
                           </p>
-                          <div className="mt-3 pt-3 border-t border-border flex items-center justify-center">
-                            <img 
-                              src="/images/design-mode/toyota-2-logo.png" 
-                              alt="Toyota" 
-                              className="h-7 sm:h-9 object-contain"
-                            />
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -916,64 +996,48 @@ export default function Page() {
                         ))}
                     </div>
                     
-                      <div className="bg-secondary p-6 sm:p-8 md:p-10 rounded-xl md:rounded-2xl border border-border shadow-lg">
+                      <div className="bg-card p-4 sm:p-6 md:p-10 rounded-2xl border border-border shadow-lg">
                         <h3 className={`${sectionHeading} text-center mb-4 md:mb-6`}>
-                          A Single Source of Truth
+                          What Makes Us Unique
                         </h3>
-                        <p className="text-base sm:text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-foreground">
-                          for Your Vehicle Rental Operations
-                        </p>
-                        
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 items-center justify-items-center">
-                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
-                          <img 
-                            src="/images/design-mode/rcm-logo.png" 
-                            alt="Your Booking system" 
-                            className="max-w-full max-h-full object-contain"
-                          />
-                          </div>
-                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
-                            <img 
-                              src="/images/design-mode/wheelbase-logo.webp" 
-                            alt="Wheelbase" 
-                              className="max-w-full max-h-full object-contain"
-                          />
-                          </div>
-                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
-                          <img 
-                              src="/images/design-mode/slack-logo.png" 
-                            alt="Slack" 
-                              className="max-w-full max-h-full object-contain"
-                          />
-                          </div>
-                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
-                          <img 
-                              src="/images/design-mode/whatsapp-logo.jpeg" 
-                            alt="WhatsApp" 
-                              className="max-w-full max-h-full object-contain"
-                            />
-                          </div>
-                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
-                            <img 
-                              src="/images/design-mode/google-drive-logo.png" 
-                              alt="Google Drive" 
-                              className="max-w-full max-h-full object-contain"
-                            />
-                          </div>
-                          <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
-                            <img 
-                              src="/images/design-mode/n8n-badge.png" 
-                              alt="N8n" 
-                              className="max-w-full max-h-full object-contain"
-                            />
-                          </div>
-                        <div className="bg-white p-2 sm:p-3 md:p-4 rounded-lg shadow-sm flex items-center justify-center w-full h-16 sm:h-20 md:h-24">
-                          <img 
-                            src="/your_booking_logo.png" 
-                            alt="Your Booking" 
-                            className="max-w-full max-h-full object-contain"
-                          />
-                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                          {[
+                            {
+                              title: 'Integrated Ecosystem',
+                              description:
+                                'TrackIt, RentalBuddy, and Shakkii work together seamlessly to create a unified operational platform.',
+                            },
+                            {
+                              title: 'Agentic AI (Action-First)',
+                              description:
+                                'Our system doesn’t just analyze — it detects, decides, and executes actions autonomously.',
+                            },
+                            {
+                              title: 'Zero-Friction Operations',
+                              description:
+                                'Fully automated pickup and maintenance workflows eliminate manual steps and reduce customer effort.',
+                            },
+                            {
+                              title: 'Immediate Impact',
+                              description:
+                                'Significant reduction in administrative workload and instant response across all touchpoints.',
+                            },
+                          ].map((item) => (
+                            <div
+                              key={item.title}
+                              className="bg-secondary/90 rounded-xl border border-border p-4 sm:p-5 md:p-6 shadow-sm group hover:-translate-y-1 hover:shadow-2xl transition-all duration-200"
+                            >
+                              <div className="flex items-center gap-3 mb-3">
+                                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold group-hover:bg-primary group-hover:text-white transition-colors duration-200">
+                                  <span>★</span>
+                                </div>
+                                <h4 className="text-lg font-bold text-foreground">{item.title}</h4>
+                              </div>
+                              <p className="text-sm sm:text-base text-muted-foreground">
+                                {item.description}
+                              </p>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -1677,6 +1741,36 @@ export default function Page() {
                             </div>
                           </div>
                         </div>
+                    <div className="bg-card p-4 sm:p-6 md:p-8 rounded-2xl border border-border shadow-lg">
+                      <div className="text-center mb-5 md:mb-8">
+                        <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          Google Reviews
+                        </p>
+                        <h3 className="text-xl sm:text-3xl font-bold text-foreground mt-2">
+                          Real renters love flexible pick-up & drop-off
+                        </h3>
+                        <p className="text-sm sm:text-base text-muted-foreground mt-2 max-w-3xl mx-auto">
+                          Pulled directamente de reseñas públicas en Google de programas contactless impulsados por Rental Buddy.
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                        {pickupDropoffReviews.map((review) => (
+                          <div
+                            key={review.quote}
+                            className="bg-secondary/80 dark:bg-card rounded-xl border border-border p-4 sm:p-5 flex flex-col gap-3 shadow-sm"
+                          >
+                            <FaQuoteLeft className="text-primary text-2xl" />
+                            <p className="text-sm sm:text-base text-foreground leading-relaxed">
+                              {review.quote}
+                            </p>
+                            <span className="text-xs sm:text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                              Google reviewer
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                       </div>
 
                       <div className="bg-card rounded-xl md:rounded-2xl border border-border shadow-lg overflow-hidden mt-6 md:mt-8">
