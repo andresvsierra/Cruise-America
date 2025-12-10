@@ -449,6 +449,10 @@ export default function Page() {
     {
       src: "/images/poster mac copy.png",
       alt: "Shakkii Interface Overview"
+    },
+    {
+      src: "/images/poster ipad.png",
+      alt: "Shakkii Tablet Interface"
     }
   ]
 
@@ -1784,7 +1788,7 @@ export default function Page() {
 
                         <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-md flex justify-center">
                           <div 
-                            className="relative w-full max-w-4xl mx-auto rounded-lg md:rounded-xl overflow-hidden border border-border group cursor-pointer"
+                            className="relative w-full max-w-2xl mx-auto rounded-lg md:rounded-xl overflow-hidden border border-border group cursor-pointer"
                             onClick={() => {
                               setLightboxSource('shakkii')
                               setLightboxOpen(true)
