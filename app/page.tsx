@@ -307,12 +307,6 @@ const slides = [
     tabLine2: "",
     hasSubTabs: true,
   },
-  {
-    id: "next-steps",
-    title: "Next Steps",
-    tabLine1: "Next Steps",
-    tabLine2: "",
-  },
 ]
 
 const productSubTabs = [
@@ -346,43 +340,6 @@ const sectionSubtitle =
   "text-base sm:text-lg text-muted-foreground leading-relaxed"
 const bodyText = "text-base sm:text-lg text-muted-foreground leading-relaxed"
 
-// Placeholder for WorkshopChecklist component
-const WorkshopChecklist = () => {
-  const [openSection, setOpenSection] = useState<string | null>(null);
-  const [checklist, setChecklist] = useState({
-    companyOverview: { label: "Company Overview", checked: false },
-    productDemo: { label: "Product Demo", checked: false },
-    useCases: { label: "Use Cases", checked: false },
-    qAndA: { label: "Q&A Session", checked: false },
-    nextSteps: { label: "Next Steps Discussion", checked: false },
-    feedback: { label: "Collect Feedback", checked: false },
-  });
-
-  const toggleSection = (section: keyof typeof checklist) => {
-    setOpenSection(openSection === section ? null : section);
-  };
-
-  const toggleCheck = (section: keyof typeof checklist) => {
-    setChecklist(prev => ({
-      ...prev,
-      [section]: { ...prev[section], checked: !prev[section].checked },
-    }));
-  };
-
-  const handleEmail = () => {
-    const subject = "Workshop Checklist Summary";
-    let body = "Here is a summary of the workshop checklist:\n\n";
-    Object.entries(checklist).forEach(([key, value]) => {
-      body += `- ${value.label}: ${value.checked ? '✅' : '⬜'}\n`;
-    });
-    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  return (
-    null
-  );
-};
-
 export default function Page() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [currentSubTab, setCurrentSubTab] = useState(0)
@@ -398,7 +355,7 @@ export default function Page() {
   const [techFoundationIndex, setTechFoundationIndex] = useState(0)
   const [pickupCarouselIndex, setPickupCarouselIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [lightboxSource, setLightboxSource] = useState<'spatial' | 'technical' | 'pickup' | 'pickupJourney' | 'seeItInAction'>('spatial')
+  const [lightboxSource, setLightboxSource] = useState<'spatial' | 'technical' | 'pickup' | 'pickupJourney' | 'seeItInAction' | 'shakkii'>('spatial')
   
   const [trackingOptionsOpen, setTrackingOptionsOpen] = useState(false)
   const [pickupDropoffOpen, setPickupDropoffOpen] = useState(false)
@@ -481,6 +438,28 @@ export default function Page() {
   // CHANGE: Added new carousel index state and navigation functions for see it in action section
   const [seeItInActionIndex, setSeeItInActionIndex] = useState(0)
 
+  // CHANGE: Added new carousel state for Shakkii section
+  const [shakkiiIndex, setShakkiiIndex] = useState(0)
+  
+  const shakkiiImages = [
+    {
+      src: "/images/rental_blocks_shakkii.png",
+      alt: "Rental Buddy Shakkii operational flow"
+    },
+    {
+      src: "/images/poster mac copy.png",
+      alt: "Shakkii Interface Overview"
+    }
+  ]
+
+  const nextShakkiiImage = () => {
+    setShakkiiIndex((prev) => (prev + 1) % shakkiiImages.length)
+  }
+
+  const prevShakkiiImage = () => {
+    setShakkiiIndex((prev) => (prev - 1 + shakkiiImages.length) % shakkiiImages.length)
+  }
+
   const nextSeeItInActionImage = () => {
     setSeeItInActionIndex((prev) => (prev + 1) % pickupJourneyImages.length)
   }
@@ -512,6 +491,8 @@ export default function Page() {
           nextPickupImage()
         } else if (lightboxSource === 'seeItInAction') {
           nextSeeItInActionImage()
+        } else if (lightboxSource === 'shakkii') {
+          nextShakkiiImage()
         } else { // lightboxSource === 'pickupJourney'
           nextPickupJourneyImage()
         }
@@ -524,6 +505,8 @@ export default function Page() {
           prevPickupImage()
         } else if (lightboxSource === 'seeItInAction') {
           prevSeeItInActionImage()
+        } else if (lightboxSource === 'shakkii') {
+          prevShakkiiImage()
         } else { // lightboxSource === 'pickupJourney'
           prevPickupJourneyImage()
         }
@@ -532,7 +515,7 @@ export default function Page() {
 
     window.addEventListener('keydown', handleLightboxKeyDown)
     return () => window.removeEventListener('keydown', handleLightboxKeyDown)
-  }, [lightboxOpen, carouselIndex, techFoundationIndex, pickupCarouselIndex, pickupJourneyIndex, seeItInActionIndex, lightboxSource])
+  }, [lightboxOpen, carouselIndex, techFoundationIndex, pickupCarouselIndex, pickupJourneyIndex, seeItInActionIndex, shakkiiIndex, lightboxSource])
   
 
   const handleStartPresentation = async () => {
@@ -1373,23 +1356,13 @@ export default function Page() {
                                 </h4>
                                 <div className="space-y-2 md:space-y-3 ml-3 md:ml-4">
                                   {trackitEssentialsOptions.map((item) => (
-                                    <label
+                                    <div
                                       key={item.key}
-                                      className="flex items-center justify-between p-2 sm:p-3 rounded-lg hover:bg-secondary cursor-pointer transition-colors duration-150"
+                                      className="flex items-center justify-between p-2 sm:p-3 rounded-lg hover:bg-secondary transition-colors duration-150"
                                     >
                                       <span className="text-base sm:text-lg text-foreground">{item.label}</span>
-                                      <input
-                                        type="checkbox"
-                                        checked={!!trackingEssentials[item.key as keyof typeof trackingEssentials]}
-                                        onChange={(e) =>
-                                          setTrackingEssentials({
-                                            ...trackingEssentials,
-                                            [item.key]: e.target.checked,
-                                          })
-                                        }
-                                        className="w-4 h-4 sm:w-5 sm:h-5 rounded focus:ring-2 focus:ring-primary accent-primary cursor-pointer"
-                                      />
-                                    </label>
+                                      <FaCheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                                    </div>
                                   ))}
                                 </div>
                               </div>
@@ -1401,9 +1374,9 @@ export default function Page() {
                                 </h4>
                                 <div className="space-y-2 md:space-y-3 ml-3 md:ml-4">
                                   {trackitAiOptions.map((item) => (
-                                    <label
+                                    <div
                                       key={item.key}
-                                      className="flex items-center justify-between p-2 sm:p-3 rounded-lg hover:bg-secondary cursor-pointer transition-colors duration-150 group"
+                                      className="flex items-center justify-between p-2 sm:p-3 rounded-lg hover:bg-secondary transition-colors duration-150 group"
                                     >
                                       <div className="flex items-center gap-2">
                                         <span className="text-base sm:text-lg text-foreground">{item.label}</span>
@@ -1417,114 +1390,9 @@ export default function Page() {
                                           </div>
                                         </div>
                                       </div>
-                                      <input
-                                        type="checkbox"
-                                        checked={!!aiDataIntelligence[item.key as keyof typeof aiDataIntelligence]}
-                                        onChange={(e) =>
-                                          setAiDataIntelligence({
-                                            ...aiDataIntelligence,
-                                            [item.key]: e.target.checked,
-                                          })
-                                        }
-                                        className="w-4 h-4 sm:w-5 sm:h-5 rounded focus:ring-2 focus:ring-primary accent-primary cursor-pointer"
-                                      />
-                                    </label>
+                                      <FaCheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                                    </div>
                                   ))}
-                                </div>
-                              </div>
-
-                              <div>
-                                {/* CHANGE: Updated section title and replaced questions */}
-                                <h4 className="text-lg sm:text-xl font-bold text-foreground mb-3 md:mb-4 flex items-center gap-1 md:gap-2">
-                                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary"></span>
-                                  Tell us a bit more about your needs
-                                </h4>
-                                <div className="ml-3 md:ml-4 space-y-4">
-                                  <div>
-                                    <label className="block text-sm font-medium text-foreground mb-2">
-                                      What kind of information or data would help you make better or faster decisions?
-                                    </label>
-                                    <textarea
-                                      rows={2}
-                                      className="w-full p-3 rounded-lg border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-200 text-base text-foreground placeholder:text-muted-foreground resize-none"
-                                      placeholder="Your answer..."
-                                      value={trackitQuestionnaire.decisionData}
-                                      onChange={(e) =>
-                                        setTrackitQuestionnaire((prev) => ({
-                                          ...prev,
-                                          decisionData: e.target.value,
-                                        }))
-                                      }
-                                    />
-                                  </div>
-                                  
-                                  <div>
-                                    <label className="block text-sm font-medium text-foreground mb-2">
-                                      Are there any specific events, behaviors, or renter patterns you wish the system could predict?
-                                    </label>
-                                    <textarea
-                                      rows={2}
-                                      className="w-full p-3 rounded-lg border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-200 text-base text-foreground placeholder:text-muted-foreground resize-none"
-                                      placeholder="Your answer..."
-                                      value={trackitQuestionnaire.predictionNeeds}
-                                      onChange={(e) =>
-                                        setTrackitQuestionnaire((prev) => ({
-                                          ...prev,
-                                          predictionNeeds: e.target.value,
-                                        }))
-                                      }
-                                    />
-                                  </div>
-                                  
-                                  <div>
-                                    <label className="block text-sm font-medium text-foreground mb-2">
-                                      Any additional comments or ideas?
-                                    </label>
-                                    <textarea
-                                      rows={2}
-                                      className="w-full p-3 rounded-lg border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-200 text-base text-foreground placeholder:text-muted-foreground resize-none"
-                                      placeholder="Your answer..."
-                                      value={trackitQuestionnaire.additionalComments}
-                                      onChange={(e) =>
-                                        setTrackitQuestionnaire((prev) => ({
-                                          ...prev,
-                                          additionalComments: e.target.value,
-                                        }))
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                                  
-                              <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
-                                <div className="bg-card p-4 sm:p-6 rounded-lg md:rounded-xl shadow-lg border-2 border-primary">
-                                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                                    <span className="text-xl sm:text-2xl font-bold text-foreground">PRICE:</span>
-                                    <span className="text-3xl sm:text-4xl font-black text-primary">USD $10</span>
-                                    <span className="text-base sm:text-xl font-semibold text-foreground">per vehicle per month</span>
-                                  </div>
-                                </div>
-                                
-                                <div className="mt-4 md:mt-6 flex justify-center">
-                                  <button
-                                    onClick={async () => {
-                                      const essentialsSelected = summarizeSelections(trackingEssentials, trackitEssentialsLabels)
-                                      const aiInsightsSelected = summarizeSelections(aiDataIntelligence, trackitAiLabels)
-                                      await saveSelectionsToFirebase('trackitSelections', {
-                                        formLabel: 'Trackit Options',
-                                        trackingEssentials,
-                                        aiDataIntelligence,
-                                    questionnaire: trackitQuestionnaire,
-                                        essentialsSelected,
-                                        aiInsightsSelected,
-                                        savedAt: new Date().toISOString(),
-                                      })
-                                      alert('Your Trackit selections have been saved!')
-                                    }}
-                                    className="px-6 sm:px-8 py-2 sm:py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base sm:text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
-                                  >
-                                    Save Selection
-                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -1800,133 +1668,20 @@ export default function Page() {
                                     <Icon className="text-xl sm:text-2xl text-primary" />
                                     {group.title}
                                   </h4>
-                                <div className="space-y-2 md:space-y-3">
-                                  {group.items.map((item) => (
-                                    <label
-                                      key={item.key}
-                                      className="flex items-center justify-between p-2 sm:p-3 bg-card rounded-lg hover:bg-secondary cursor-pointer transition-colors duration-150 border border-gray-200"
-                                    >
-                                      <span className="text-sm sm:text-base font-medium text-foreground">{item.label}</span>
-                                      <input
-                                        type="checkbox"
-                                        checked={!!pickupDropoffOptions[item.key as keyof typeof pickupDropoffOptions]}
-                                        onChange={(e) =>
-                                          setPickupDropoffOptions({
-                                            ...pickupDropoffOptions,
-                                            [item.key]: e.target.checked,
-                                          })
-                                        }
-                                        className="w-4 h-4 sm:w-5 sm:h-5 rounded focus:ring-2 focus:ring-primary accent-primary cursor-pointer"
-                                      />
-                                    </label>
-                                  ))}
-                                </div>
+                                  <div className="space-y-2 md:space-y-3">
+                                    {group.items.map((item) => (
+                                      <div
+                                        key={item.key}
+                                        className="flex items-center justify-between p-2 sm:p-3 bg-card rounded-lg hover:bg-secondary transition-colors duration-150 border border-gray-200"
+                                      >
+                                        <span className="text-sm sm:text-base font-medium text-foreground">{item.label}</span>
+                                        <FaCheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
                               )
                             })}
-
-                            <div className="pt-3 md:pt-4 flex justify-center">
-                              <button
-                                onClick={async () => {
-                                  const selectedFlows = summarizeSelections(pickupDropoffOptions, pickupOptionLabelMap)
-                                  await saveSelectionsToFirebase('pickupDropoffSelections', {
-                                    formLabel: 'Pick-Up & Drop-Off',
-                                    options: pickupDropoffOptions,
-                                    selectedFlows,
-                                    savedAt: new Date().toISOString(),
-                                  })
-                                  alert('Your selections have been saved!')
-                                }}
-                                className="px-7 sm:px-10 py-2 sm:py-4 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base sm:text-lg rounded-lg md:rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
-                              >
-                                Save Selections
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-card rounded-xl md:rounded-2xl border border-border shadow-lg overflow-hidden mt-6 md:mt-8">
-                        <button
-                          onClick={() => {
-                            // const currentState = pickupDropoffOpen // This line seems unused, removing it.
-                            setPricingOpen(!pricingOpen)
-                          }}
-                          className="w-full px-5 sm:px-8 py-4 sm:py-6 flex items-center justify-between bg-secondary hover:bg-secondary/80 transition-colors duration-200"
-                        >
-                          <h3 className="text-xl sm:text-2xl font-bold text-foreground">Pricing</h3>
-                          <FaChevronDown
-                            className={`w-5 h-5 sm:w-6 sm:h-6 text-primary transform transition-transform duration-300 ${
-                              pricingOpen ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </button>
-
-                        <div
-                          className={`transition-all duration-300 ease-in-out ${
-                            pricingOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-                          } overflow-hidden`}
-                        >
-                          <div className="p-5 sm:p-8">
-                            <div className="overflow-x-auto">
-                              <table className="w-full border-collapse bg-card rounded-lg shadow-sm">
-                                <thead>
-                                  <tr className="bg-secondary border-b-2 border-border">
-                                    <th className="px-4 py-3 text-left text-sm sm:text-base font-bold text-foreground">Tier</th>
-                                    <th className="px-4 py-3 text-left text-sm sm:text-base font-bold text-foreground">Monthly Rentals (range)</th>
-                                    <th className="px-4 py-3 text-left text-sm sm:text-base font-bold text-foreground">Suggested Monthly Fee</th>
-                                    <th className="px-4 py-3 text-left text-sm sm:text-base font-bold text-foreground">Cost per Rental</th>
-                                    <th className="px-4 py-3 text-left text-sm sm:text-base font-bold text-foreground">Notes</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {[
-                                    { tier: 'Tier 1', range: 'Up to 250', fee: '$450', cost: '$1.80', notes: 'Basic plan' },
-                                    { tier: 'Tier 2', range: '251–1,000', fee: '$950', cost: '$0.95', notes: 'Volume discount' },
-                                    { tier: 'Tier 3', range: '1,001–2,000', fee: '$1,500', cost: '$0.75', notes: 'Multi-branch growth' },
-                                    { tier: 'Tier 4', range: '2,001+', fee: 'Starting at $2,500', cost: '$0.60–$0.70', notes: 'Enterprise' },
-                                  ].map((row, idx) => (
-                                    <tr key={idx} className="border-b border-border hover:bg-secondary/30 transition-colors">
-                                      <td className="px-4 py-3 text-sm sm:text-base font-semibold text-primary">{row.tier}</td>
-                                      <td className="px-4 py-3 text-sm sm:text-base text-foreground">{row.range}</td>
-                                      <td className="px-4 py-3 text-sm sm:text-base font-semibold text-foreground">{row.fee}</td>
-                                      <td className="px-4 py-3 text-sm sm:text-base text-foreground">{row.cost}</td>
-                                      <td className="px-4 py-3 text-sm sm:text-base text-muted-foreground">{row.notes}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-
-                            <div className="mt-4 p-4 bg-secondary/50 rounded-lg border border-border">
-                              <p className="text-sm text-muted-foreground italic">
-                                Billed at the tier that covers your total completed rentals per calendar month. 
-                              </p>
-                            </div>
-
-                            <div className="mt-6 p-6 bg-card rounded-lg border-2 border-primary/30">
-                              <h4 className="text-lg font-bold text-foreground mb-4">What happens if you exceed your tier?</h4>
-                              <div className="space-y-3">
-                                <div className="flex items-start gap-3 p-4 bg-secondary rounded-lg border border-border">
-                                  <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
-                                    <FaCheckCircle className="text-primary text-xl" />
-                                  </div>
-                                  <div>
-                                    <p className="text-sm font-semibold text-foreground mb-1">Option A: Move up to the next tier</p>
-                                    <p className="text-xs text-muted-foreground">Upgrade to access the benefits of the next tier level</p>
-                                  </div>
-                                </div>
-                                <div className="flex items-start gap-3 p-4 bg-secondary rounded-lg border border-border">
-                                  <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
-                                    <FaCheckCircle className="text-primary text-xl" />
-                                  </div>
-                                  <div>
-                                    <p className="text-sm font-semibold text-foreground mb-1">Option B: Stay in your tier and pay only for the extra rentals</p>
-                                    <p className="text-xs text-muted-foreground">(at the per-rental rate of the tier you are currently in)</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -2028,11 +1783,75 @@ export default function Page() {
                         </div>
 
                         <div className="bg-secondary p-4 sm:p-6 rounded-xl md:rounded-2xl border border-border shadow-md flex justify-center">
-                          <img
-                            src="/images/rental_blocks_shakkii.png"
-                            alt="Rental Buddy Shakkii operational flow"
-                            className="w-[60%] md:w-1/2 rounded-lg shadow-lg border border-border object-cover"
-                          />
+                          <div 
+                            className="relative w-full max-w-4xl mx-auto rounded-lg md:rounded-xl overflow-hidden border border-border group cursor-pointer"
+                            onClick={() => {
+                              setLightboxSource('shakkii')
+                              setLightboxOpen(true)
+                            }}
+                          >
+                            <img
+                              src={shakkiiImages[shakkiiIndex].src || "/placeholder.svg"}
+                              alt={shakkiiImages[shakkiiIndex].alt}
+                              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
+                            />
+
+                            {/* Zoom icon indicator */}
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-200 flex items-center justify-center">
+                              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white/90 rounded-full p-3 shadow-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <circle cx="11" cy="11" r="8"></circle>
+                                  <path d="m21 21-4.35-4.35"></path>
+                                  <line x1="11" y1="8" x2="11" y2="14"></line>
+                                  <line x1="8" y1="11" x2="14" y2="11"></line>
+                                </svg>
+                              </div>
+                            </div>
+                            
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                prevShakkiiImage()
+                              }}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                              aria-label="Previous image"
+                            >
+                              <FaChevronLeft className="w-4 h-4" />
+                            </button>
+                            
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                nextShakkiiImage()
+                              }}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                              aria-label="Next image"
+                            >
+                              <FaChevronRight className="w-4 h-4" />
+                            </button>
+
+                            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+                              {shakkiiImages.map((_, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    setShakkiiIndex(idx)
+                                  }}
+                                  className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                                    idx === shakkiiIndex 
+                                      ? 'bg-white w-6' 
+                                      : 'bg-white/50 hover:bg-white/75'
+                                  }`}
+                                  aria-label={`Go to image ${idx + 1}`}
+                                />
+                              ))}
+                            </div>
+
+                            <div className="absolute top-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full">
+                              {shakkiiIndex + 1} / {shakkiiImages.length}
+                            </div>
+                          </div>
                         </div>
 
                       </div>
@@ -2041,10 +1860,6 @@ export default function Page() {
                   )}
                 </>
               )}
-
-              <div className="mt-8 md:mt-12">
-                <WorkshopChecklist />
-              </div>
             </div>
           </div>
         </div>
@@ -2109,7 +1924,7 @@ export default function Page() {
               </svg>
             </button>
 
-            <button
+              <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation()
@@ -2121,6 +1936,8 @@ export default function Page() {
                   prevPickupImage()
                 } else if (lightboxSource === 'seeItInAction') {
                   prevSeeItInActionImage()
+                } else if (lightboxSource === 'shakkii') {
+                  prevShakkiiImage()
                 } else { // lightboxSource === 'pickupJourney'
                   prevPickupJourneyImage()
                 }
@@ -2143,6 +1960,8 @@ export default function Page() {
                   nextPickupImage()
                 } else if (lightboxSource === 'seeItInAction') {
                   nextSeeItInActionImage()
+                } else if (lightboxSource === 'shakkii') {
+                  nextShakkiiImage()
                 } else { // lightboxSource === 'pickupJourney'
                   nextPickupJourneyImage()
                 }
@@ -2164,6 +1983,8 @@ export default function Page() {
                     ? pickupCarouselImages[pickupCarouselIndex].src
                     : lightboxSource === 'seeItInAction'
                     ? pickupJourneyImages[seeItInActionIndex].src
+                    : lightboxSource === 'shakkii'
+                    ? shakkiiImages[shakkiiIndex].src
                     : pickupJourneyImages[pickupJourneyIndex].src
                 }
                 alt={
@@ -2175,6 +1996,8 @@ export default function Page() {
                     ? pickupCarouselImages[pickupCarouselIndex].alt
                     : lightboxSource === 'seeItInAction'
                     ? pickupJourneyImages[seeItInActionIndex].alt
+                    : lightboxSource === 'shakkii'
+                    ? shakkiiImages[shakkiiIndex].alt
                     : pickupJourneyImages[pickupJourneyIndex].alt
                 }
                 className="max-w-full max-h-[calc(100vh-80px)] object-contain rounded-lg shadow-2xl"
@@ -2191,6 +2014,8 @@ export default function Page() {
                     ? pickupCarouselImages[pickupCarouselIndex].alt
                     : lightboxSource === 'seeItInAction'
                     ? pickupJourneyImages[seeItInActionIndex].alt
+                    : lightboxSource === 'shakkii'
+                    ? shakkiiImages[shakkiiIndex].alt
                     : pickupJourneyImages[pickupJourneyIndex].alt
                   }
                 </p>
@@ -2203,6 +2028,8 @@ export default function Page() {
                     ? pickupCarouselImages
                     : lightboxSource === 'seeItInAction'
                     ? pickupJourneyImages
+                    : lightboxSource === 'shakkii'
+                    ? shakkiiImages
                     : pickupJourneyImages
                   ).map((_, idx) => (
                     <button
@@ -2216,6 +2043,8 @@ export default function Page() {
                           setPickupCarouselIndex(idx)
                         } else if (lightboxSource === 'seeItInAction') {
                           setSeeItInActionIndex(idx)
+                        } else if (lightboxSource === 'shakkii') {
+                          setShakkiiIndex(idx)
                         } else { // lightboxSource === 'pickupJourney'
                           setPickupJourneyIndex(idx)
                         }
@@ -2229,6 +2058,8 @@ export default function Page() {
                           ? pickupCarouselIndex
                           : lightboxSource === 'seeItInAction'
                           ? seeItInActionIndex
+                          : lightboxSource === 'shakkii'
+                          ? shakkiiIndex
                           : pickupJourneyIndex)
                           ? 'bg-white w-6' 
                           : 'bg-white/50 hover:bg-white/75'
@@ -2246,6 +2077,8 @@ export default function Page() {
                     ? `${pickupCarouselIndex + 1} / ${pickupCarouselImages.length}`
                     : lightboxSource === 'seeItInAction'
                     ? `${seeItInActionIndex + 1} / ${pickupJourneyImages.length}`
+                    : lightboxSource === 'shakkii'
+                    ? `${shakkiiIndex + 1} / ${shakkiiImages.length}`
                     : `${pickupJourneyIndex + 1} / ${pickupJourneyImages.length}`
                   }
                 </div>
